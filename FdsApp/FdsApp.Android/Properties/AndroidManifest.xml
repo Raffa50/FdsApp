@@ -8,8 +8,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-  
 	<application android:label="FdsApp.Android">
-    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCOzVWzR6M2nZ5udz94o04uz5pKjA98o8Q" />
-  </application>
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCOzVWzR6M2nZ5udz94o04uz5pKjA98o8Q" />
+	</application>
 </manifest>
