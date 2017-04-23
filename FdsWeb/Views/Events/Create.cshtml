@@ -6,13 +6,13 @@
 
 <h2>Create</h2>
 
-<form asp-action="Create">
+<form asp-action="Create" id="createform">
     <div class="form-horizontal">
         <h4>Event</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <label asp-for="Name" class="col-md-2 control-label"></label> *
             <div class="col-md-10">
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -22,6 +22,14 @@
         <input asp-for="Latitude" id="latitudeInput" class="form-control" type="text" style="display: none;" />
         <input asp-for="Longitude" id="longitudeInput" class="form-control" type="text" style="display: none;" />
         
+        <!-- questo searchbox serve per cercare l'indirizzo su googleMap -->
+        <div class="form-group">
+            <label class="col-md-2 control-label">Dov'&egrave; l'Evento? *</label>
+            <div class="col-md-10" >
+                <input type="text" id="pac-input" class="form-control inputMargin" placeholder="Metti indirizzo" data-toggle="popover" data-content="Indirizzo non valido">
+            </div>
+        </div>
+
         <div class="form-group" >
             <div id="googleMap"></div>
         </div>
@@ -45,5 +53,10 @@
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
 <script src="/js/googleMaps.js"></script>
 <script>
-    $(document).ready( () => { initMap(); } );
+    $(document).ready(() => { initMap(true); });
+    $("#createform").submit(() => {
+        $("#latitudeInput").val(map.getCenter().lat());
+        $("#longitudeInput").val(map.getCenter().lng());
+        return true;
+    });
 </script>

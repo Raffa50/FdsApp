@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FdsWeb.Data;
 using FdsWeb.Models;
+using FdsWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -32,7 +34,7 @@ namespace FdsWeb.Controllers{
         public async Task<IActionResult> Index() {
             ViewData[ "User" ] = GetUser();
 
-            return View(await _context.Event.ToListAsync());
+            return View(await _context.Event.Include( e => e.ApplicationUser ).ToListAsync());
         }
 
         // GET: Events/Details/5
@@ -64,15 +66,20 @@ namespace FdsWeb.Controllers{
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Latitude,Longitude")] Event @event) {
-            @event.ApplicationUser = GetUser();
+        public async Task<IActionResult> Create( CreateEvent createEvent) {
+            if (ModelState.IsValid) {
+                var ev = new Event() {
+                    ApplicationUser = GetUser(),
+                    Name = createEvent.Name,
+                    Latitude = double.Parse(createEvent.Latitude, CultureInfo.InvariantCulture),
+                    Longitude = double.Parse(createEvent.Latitude, CultureInfo.InvariantCulture)
+                };
 
-            if (ModelState.IsValid){
-                _context.Add(@event);
+                _context.Event.Add(ev);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(@event);
+            return View(createEvent);
         }
 
         // GET: Events/Edit/5
@@ -96,8 +103,7 @@ namespace FdsWeb.Controllers{
         // POST: Events/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ApplicationUserId,Latitude,Longitude")] Event @event){
             if (id != @event.Id){
                 return NotFound();
@@ -135,8 +141,7 @@ namespace FdsWeb.Controllers{
         }
 
         // POST: Events/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id){
             var @event = await _context.Event.SingleOrDefaultAsync(m => m.Id == id);
             _context.Event.Remove(@event);
