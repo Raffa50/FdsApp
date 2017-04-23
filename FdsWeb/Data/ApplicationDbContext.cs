@@ -21,5 +21,7 @@ namespace FdsWeb.Data{
 
             builder.Entity< Schedule >( e => e.HasKey( o => new {o.EventId, o.DateTime} ) );
         }
+
+        public DbSet<FdsWeb.Models.Event> Event { get; set; }
     }
 }

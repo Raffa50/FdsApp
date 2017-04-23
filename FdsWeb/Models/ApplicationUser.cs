@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace FdsWeb.Models
-{
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
-    {
+namespace FdsWeb.Models{
+    public enum Role { User, Mod, Admin }
+
+    public class ApplicationUser : IdentityUser{
+        public virtual Role Role { get; set; }
     }
 }
