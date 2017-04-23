@@ -17,7 +17,11 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     
+    @RenderSection("Css", required: false)
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    
+    @RenderSection("HeadJs", required: false)
 
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
