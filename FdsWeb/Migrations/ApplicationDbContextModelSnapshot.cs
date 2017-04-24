@@ -101,7 +101,7 @@ namespace FdsWeb.Migrations
 
                     b.HasKey("EventId", "DateTime");
 
-                    b.ToTable("Schedule");
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>

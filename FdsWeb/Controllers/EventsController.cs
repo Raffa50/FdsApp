@@ -66,20 +66,28 @@ namespace FdsWeb.Controllers{
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( CreateEvent createEvent) {
+        public async Task<IActionResult> Create( CreateEvent model) {
             if (ModelState.IsValid) {
                 var ev = new Event() {
                     ApplicationUser = GetUser(),
-                    Name = createEvent.Name,
-                    Latitude = double.Parse(createEvent.Latitude, CultureInfo.InvariantCulture),
-                    Longitude = double.Parse(createEvent.Latitude, CultureInfo.InvariantCulture)
+                    Name = model.Name,
+                    Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
+                    Longitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture)
                 };
 
                 _context.Event.Add(ev);
+
+                foreach ( var date in model.Schedule ) {
+                    _context.Schedules.Add(new Schedule() {
+                        DateTime = date,
+                        Event = ev
+                    });
+                }
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(createEvent);
+            return View(model);
         }
 
         // GET: Events/Edit/5

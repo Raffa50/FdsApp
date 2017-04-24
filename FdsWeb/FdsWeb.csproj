@@ -40,7 +40,7 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Statics\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

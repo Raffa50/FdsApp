@@ -9,7 +9,7 @@ using FdsWeb.Models;
 namespace FdsWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170423100632_Initial")]
+    [Migration("20170424162800_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,7 +102,7 @@ namespace FdsWeb.Migrations
 
                     b.HasKey("EventId", "DateTime");
 
-                    b.ToTable("Schedule");
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>

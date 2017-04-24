@@ -36,14 +36,17 @@
         
         <div class="form-group">
             <label class="col-md-2 control-label">Date</label>
-            <div class="col-md-10">
-                <div id="datetimepicker" class="input-append date">
-                    <input data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+            <div id="schedules" class="col-md-10">
+                <div id="datetimepicker" class="input-append">
+                    <input asp-for="Schedule" data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
                     <span class="add-on">
                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                         </i>
                     </span>
                 </div>
+            </div>
+            <div id="addDate">
+                <input type="button" class="form-control" onclick="addDate()" value=" + ">  </input>
             </div>
         </div>
 
@@ -78,7 +81,7 @@
 
 
 <script>
-    $('#datetimepicker').datetimepicker({
+    $('.input-append').datetimepicker({
         format: 'dd/MM/yyyy hh:mm:ss',
         language: 'pt-BR'
     });
@@ -89,4 +92,13 @@
         $("#longitudeInput").val(map.getCenter().lng());
         return true;
     });
+
+    function addDate() {
+        var c = $("#datetimepicker").clone();
+        c.appendTo("#schedules");
+        c.datetimepicker({
+            format: 'dd/MM/yyyy hh:mm:ss',
+            language: 'pt-BR'
+        });
+    }
 </script>

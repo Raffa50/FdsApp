@@ -8,8 +8,8 @@ using FdsWeb.Models;
 
 namespace FdsWeb.Data{
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
-        public DbSet< Event > Events;
-        public DbSet< Schedule > Schedules;
+        public DbSet< Event > Events { get; set; }
+        public DbSet< Schedule > Schedules { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){
         }

@@ -172,7 +172,7 @@ namespace FdsWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedule",
+                name: "Schedules",
                 columns: table => new
                 {
                     EventId = table.Column<int>(nullable: false),
@@ -181,9 +181,9 @@ namespace FdsWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedule", x => new { x.EventId, x.DateTime });
+                    table.PrimaryKey("PK_Schedules", x => new { x.EventId, x.DateTime });
                     table.ForeignKey(
-                        name: "FK_Schedule_Event_EventId",
+                        name: "FK_Schedules_Event_EventId",
                         column: x => x.EventId,
                         principalTable: "Event",
                         principalColumn: "Id",
@@ -236,7 +236,7 @@ namespace FdsWeb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Schedule");
+                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
