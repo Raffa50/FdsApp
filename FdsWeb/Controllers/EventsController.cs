@@ -34,7 +34,7 @@ namespace FdsWeb.Controllers{
         public async Task<IActionResult> Index() {
             ViewData[ "User" ] = GetUser();
 
-            return View(await _context.Event.Include( e => e.ApplicationUser ).ToListAsync());
+            return View(await _context.Event.Include( e => e.ApplicationUser ).Include( e => e.Schedule ).ToListAsync());
         }
 
         // GET: Events/Details/5
@@ -72,7 +72,7 @@ namespace FdsWeb.Controllers{
                     ApplicationUser = GetUser(),
                     Name = model.Name,
                     Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
-                    Longitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture)
+                    Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture)
                 };
 
                 _context.Event.Add(ev);

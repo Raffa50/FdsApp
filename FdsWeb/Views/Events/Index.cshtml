@@ -1,3 +1,4 @@
+@using System.Globalization
 @model IEnumerable<FdsWeb.Models.Event>
 
 @{
@@ -15,43 +16,57 @@
 
 <table class="table">
     <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    Organizzatore
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Latitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Longitude)
-                </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            Codice
+        </th>
+        <th>
+            @Html.DisplayNameFor( model => model.Name )
+        </th>
+        <th>
+            Organizzatore
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor( modelItem => item.Id )
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
+                @Html.DisplayFor( modelItem => item.Name )
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Latitude)
+                @Html.DisplayFor( modelItem => item.ApplicationUser.UserName )
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Longitude)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id" >Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" >Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+
+<div>
+    <div id="googleMap"></div>
+</div>
+
+@section HeadJs {
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
+    <script src="js/googleMaps.js" ></script>
+}
+
+<script>
+    $(document).ready(() => {
+        initMap(false, () => {
+            @foreach( var e in Model ) {
+                @:addEventMaker(new google.maps.LatLng( @e.Latitude.ToString(CultureInfo.InvariantCulture), @e.Longitude.ToString(CultureInfo.InvariantCulture) ), "@e.Id" );
+            }
+        });
+
+    });
+</script>

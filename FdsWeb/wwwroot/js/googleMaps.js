@@ -1,13 +1,13 @@
-﻿var map, marker, geocoder= new google.maps.Geocoder();
+﻿var map, marker, markers= [], geocoder= new google.maps.Geocoder();
 
-function initMap(createEvent) {
+function initMap(createEvent, cb) {
     navigator.geolocation.getCurrentPosition( loc => 
-        createGMaps( new google.maps.LatLng( loc.coords.latitude,  loc.coords.longitude), createEvent ),
-        err => createGMaps(new google.maps.LatLng(44.40678, 8.93391), createEvent)
+        createGMaps( new google.maps.LatLng( loc.coords.latitude,  loc.coords.longitude), createEvent, cb ),
+        err => createGMaps(new google.maps.LatLng(44.40678, 8.93391), createEvent, cb)
     );
 }
 
-function createGMaps(position, createEvent= false) {
+function createGMaps(position, createEvent= false, cb) {
     var mapProp = {
         center: position,
         zoom: 5,
@@ -46,6 +46,9 @@ function createGMaps(position, createEvent= false) {
     } else {
         setInterval(() => updatePosition, 3000);
     }
+
+    if( cb != null )
+        cb();
 }
 
 function placeMarker(location, title) {
@@ -59,6 +62,14 @@ function placeMarker(location, title) {
     });
 
     map.setCenter(location);
+}
+
+function addEventMaker(location, label) {
+    markers[label] = new google.maps.Marker({
+        position: location,
+        label: label,
+        map: map
+    });
 }
 
 function checkValidAddress() {
