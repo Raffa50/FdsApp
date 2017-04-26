@@ -68,6 +68,8 @@
 }
 
 @section HeadJs {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script> 
+
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
     
     <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"></script>
@@ -84,7 +86,7 @@
 <script>
     var DtpCount = 1;
 
-    $('#datetimepicker1').datetimepicker({
+    $('.input-append').datetimepicker({
         format: 'dd/MM/yyyy hh:mm:ss',
         language: 'pt-BR'
     });
@@ -102,7 +104,8 @@
         var c = $("#datetimepicker1").clone();
         c.attr("id", "datetimepicker" + ++DtpCount);
         c.appendTo("#schedules");
-        $("#datetimepicker" + DtpCount).datetimepicker({
+
+        $('.input-append').datetimepicker({
             format: 'dd/MM/yyyy hh:mm:ss',
             language: 'pt-BR'
         });

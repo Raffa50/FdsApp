@@ -28,7 +28,7 @@
             <div id="schedules" class="col-md-10" >
                 @foreach( var s in Model.Schedule ) {
                     <div class="input-append" >
-                    <input name="Schedule" class="form-control" data-format="dd/MM/yyyy hh:mm:ss" type="text" value="@s" ></input>
+                        <input name="Schedule" data-format="dd/MM/yyyy hh:mm:ss" type="text" value="@s" />
                         <span class="add-on" >
                             <i data-time-icon="icon-time" data-date-icon="icon-calendar" >
                             </i>
@@ -37,7 +37,7 @@
                 }
             </div>
             <div id="addDate">
-                <input type="button" class="form-control" onclick="addDate()" value=" + ">  </input>
+                <input type="button" class="form-control" onclick="addDate()" value=" + ">
             </div>
         </div>
 
@@ -57,6 +57,40 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Css {
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+}
+
+@section HeadJs {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+
+    <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
+}
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    $('.input-append').datetimepicker({
+        format: 'dd/MM/yyyy hh:mm:ss',
+        language: 'pt-BR'
+    });
+
+    var DtpCount = @Model.Schedule.Count;
+
+    function addDate() {
+        var c = $("#datetimepicker1").clone();
+        c.attr("id", "datetimepicker" + ++DtpCount);
+        c.appendTo("#schedules");
+
+        $('.input-append').datetimepicker({
+            format: 'dd/MM/yyyy hh:mm:ss',
+            language: 'pt-BR'
+        });
+    }
+</script>
