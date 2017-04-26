@@ -37,8 +37,8 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Date</label>
             <div id="schedules" class="col-md-10">
-                <div id="datetimepicker" class="input-append">
-                    <input asp-for="Schedule" data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+                <div id="datetimepicker1" class="input-append">
+                    <input name="Schedule" data-format="dd/MM/yyyy hh:mm:ss" type="text">
                     <span class="add-on">
                         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
                         </i>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div id="addDate">
-                <input type="button" class="form-control" onclick="addDate()" value=" + ">  </input>
+                <input type="button" class="form-control" onclick="addDate()" value=" + ">
             </div>
         </div>
 
@@ -69,6 +69,7 @@
 
 @section HeadJs {
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    
     <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"></script>
     <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
@@ -81,7 +82,9 @@
 
 
 <script>
-    $('.input-append').datetimepicker({
+    var DtpCount = 1;
+
+    $('#datetimepicker1').datetimepicker({
         format: 'dd/MM/yyyy hh:mm:ss',
         language: 'pt-BR'
     });
@@ -96,9 +99,10 @@
     });
 
     function addDate() {
-        var c = $("#datetimepicker").clone();
+        var c = $("#datetimepicker1").clone();
+        c.attr("id", "datetimepicker" + ++DtpCount);
         c.appendTo("#schedules");
-        c.datetimepicker({
+        $("#datetimepicker" + DtpCount).datetimepicker({
             format: 'dd/MM/yyyy hh:mm:ss',
             language: 'pt-BR'
         });

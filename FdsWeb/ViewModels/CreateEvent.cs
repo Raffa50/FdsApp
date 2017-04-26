@@ -7,6 +7,8 @@ using FdsWeb.Data;
 
 namespace FdsWeb.ViewModels{
     public class CreateEvent{
+        public int? Id { get; set; }
+
         [Required, MinLength(DomainConstraints.EventNameMinLen)]
         public string Name { get; set; }
 

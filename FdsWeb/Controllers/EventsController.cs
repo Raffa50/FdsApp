@@ -96,7 +96,7 @@ namespace FdsWeb.Controllers{
                 return NotFound();
             }
 
-            var @event = await _context.Event.SingleOrDefaultAsync(m => m.Id == id);
+            var @event = await _context.Event.Include( e => e.Schedule ).SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null){
                 return NotFound();
             }
@@ -105,7 +105,15 @@ namespace FdsWeb.Controllers{
             if( usr == null || @event.ApplicationUserId != usr.Id )
                 return BadRequest();
 
-            return View(@event);
+            var eventModel = new CreateEvent() {
+                Id = @event.Id,
+                Name = @event.Name,
+                Latitude = @event.Latitude.ToString( CultureInfo.InvariantCulture ),
+                Longitude = @event.Longitude.ToString( CultureInfo.InvariantCulture ),
+                Schedule = @event.Schedule.Select( e => e.DateTime ).ToList()
+            };
+
+            return View(eventModel);
         }
 
         // POST: Events/Edit/5

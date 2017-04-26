@@ -10,7 +10,7 @@ function initMap(createEvent, cb) {
 function createGMaps(position, createEvent= false, cb) {
     var mapProp = {
         center: position,
-        zoom: 5,
+        zoom: 11,
         streetViewControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -92,6 +92,11 @@ function geocodePosition(pos) {
             $("#pac-input").val(responses[0].formatted_address);
         }
     });
+}
+
+function zoomOnEvent(e) {
+    map.setCenter(markers[ e ].position);
+    map.setZoom(17);
 }
 
 function updatePosition() {

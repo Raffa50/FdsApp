@@ -6,7 +6,7 @@
     var usr = (ApplicationUser) ViewData[ "User" ];
 }
 
-<h2>Index</h2>
+
 
 @if ( usr != null && usr.Role != Role.User ) {
     <p>
@@ -14,45 +14,50 @@
     </p>
 }
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            Codice
-        </th>
-        <th>
-            @Html.DisplayNameFor( model => model.Name )
-        </th>
-        <th>
-            Organizzatore
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor( modelItem => item.Id )
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.Name )
-            </td>
-            <td>
-                @Html.DisplayFor( modelItem => item.ApplicationUser.UserName )
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id" >Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" >Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="container-fluid">
+    <div class="col-md-5" >
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Codice
+                </th>
+                <th>
+                    @Html.DisplayNameFor( model => model.Name )
+                </th>
+                <th>
+                    Organizzatore
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        <a href="#" onclick="zoomOnEvent( '@item.Id' );">@Html.DisplayFor( modelItem => item.Id )</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => item.Name )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => item.ApplicationUser.UserName )
+                    </td>
+                    <td>
+                        @if( usr != null && item.ApplicationUserId == usr.Id ) {
+                            <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a> @:|
+                        }
+                        <a asp-action="Details" asp-route-id="@item.Id" >Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 
-<div>
-    <div id="googleMap"></div>
+    <div class="col-md-6">
+        <div id="googleMap"></div>
+    </div>
 </div>
 
 @section HeadJs {
