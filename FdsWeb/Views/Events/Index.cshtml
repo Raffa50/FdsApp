@@ -35,10 +35,14 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model) {
+            @if( !Model.Any() ) {
+                <tr><td colspan="5">Nessun Evento trovato!</td></tr>
+            }
+
+            @foreach( var item in Model ) {
                 <tr>
                     <td>
-                        <a href="#" onclick="zoomOnEvent( '@item.Id' );">@Html.DisplayFor( modelItem => item.Id )</a>
+                        <a href="#" onclick="zoomOnEvent('@item.Id');" >@Html.DisplayFor( modelItem => item.Id )</a>
                     </td>
                     <td>
                         @Html.DisplayFor( modelItem => item.Name )
@@ -51,7 +55,8 @@
                     </td>
                     <td>
                         @if( usr != null && item.ApplicationUserId == usr.Id ) {
-                            <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a> @:|
+                            <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a>
+                            @:|
                         }
                         <a asp-action="Details" asp-route-id="@item.Id" >Details</a>
                     </td>

@@ -1,0 +1,83 @@
+﻿@model FdsWeb.ViewModels.Search
+
+@{
+    ViewData["Title"] = "Search";
+    var eventTypes = (ICollection< EventType >) ViewData[ "EventTypes" ];
+}
+
+<form asp-action="Index">
+    <div class="form-horizontal">
+        <h4>Cerca eventi</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Date" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Date" type="date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateBegins" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateBegins" class="form-control" />
+                <span asp-validation-for="DateBegins" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateFinish" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateFinish" class="form-control" />
+                <span asp-validation-for="DateFinish" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Tipo di evento</label>
+            <div class="col-md-10">
+                <select name="EventTypeId" class="form-control" >
+                    <option value="-1">Tutti i tipi di evento</option>
+                    @foreach( var et in eventTypes ) {
+                        <option value="@et.Id" >@et.Type</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <input asp-for="Latitude" id="latitudeInput" class="form-control" type="text" style="display: none;" />
+        <input asp-for="Longitude" id="longitudeInput" class="form-control" type="text" style="display: none;" />
+
+        <div class="form-group">
+            <label asp-for="Radius" class="col-md-2 control-label"></label>
+            <div class="col-md-1">
+                <input asp-for="Radius" class="form-control" /> 
+                <span asp-validation-for="Radius" class="text-danger"></span>
+            </div>
+            <span class="col-md-1">Km</span>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cerca" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@section HeadJs {
+    <script>
+        $(document).ready(() => {
+            navigator.geolocation.getCurrentPosition(loc => {
+                $("#latitudeInput").val(loc.coords.latitude);
+                $("#longitudeInput").val(loc.coords.longitude);
+            });
+        });
+    </script>
+}

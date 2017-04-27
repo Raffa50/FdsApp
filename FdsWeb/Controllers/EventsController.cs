@@ -12,6 +12,7 @@ using FdsWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace FdsWeb.Controllers{
     public class EventsController : Controller{
@@ -30,12 +31,48 @@ namespace FdsWeb.Controllers{
             _userManager = userManager;
         }
 
+        public IQueryable< Event > GetSearchEvents( Search search ) {
+            var qr = _context.Events.Include(e => e.ApplicationUser).Include(e => e.Schedule).Include(e => e.EventType).AsQueryable();
+
+            if (search != null)
+            {
+                if (search.Longitude != null && search.Radius != null)
+                {
+                    double lat = double.Parse(search.Latitude, CultureInfo.InvariantCulture),
+                        lon = double.Parse(search.Longitude, CultureInfo.InvariantCulture);
+
+                    qr = qr.Where(
+                        o => GeoCoordinate.Distance(o.Latitude, o.Longitude, lat, lon) <= search.Radius);
+                }
+
+                if (search.EventTypeId != null && search.EventTypeId != -1)
+                {
+                    qr = qr.Where(o => o.EventTypeId == search.EventTypeId);
+                }
+
+                if (search.Date != null)
+                {
+                    qr = qr.Where(o => o.Schedule.Any(sd => sd.DateTime.Date == search.Date.Value.Date)); //uhm ok
+                } else
+                {
+                    if (search.DateBegins != null && search.DateFinish == null)
+                        qr = qr.Where(o => o.Schedule.Any(s => s.DateTime >= search.DateBegins));
+                    else if (search.DateBegins == null && search.DateFinish != null)
+                        qr = qr.Where(o => o.Schedule.Any(s => s.DateTime <= search.DateFinish));
+                    else if (search.DateBegins != null && search.DateFinish != null)
+                        qr = qr.Where(o => o.Schedule.Any(
+                            s => s.DateTime >= search.DateBegins && s.DateTime <= search.DateFinish));
+                }
+            }
+            return qr;
+        }
+
         // GET: Events
         [AllowAnonymous]
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index( Search search ) {
             ViewData[ "User" ] = GetUser();
 
-            return View(await _context.Events.Include( e => e.ApplicationUser ).Include( e => e.Schedule ).Include( e => e.EventType ).ToListAsync());
+            return View(await GetSearchEvents(search).ToListAsync());
         }
 
         // GET: Events/Details/5
@@ -45,11 +82,11 @@ namespace FdsWeb.Controllers{
                 return RedirectToAction("Index");
             }
 
-            var @event = await _context.Events.Include( e => e.ApplicationUser ).Include( e => e.EventType ).Include( e => e.Schedule )
+            var @event = await _context.Events.Include( e => e.ApplicationUser ).Include( e => e.EventType ).Include( e => e.Schedule ).ThenInclude( uj => uj.UserJoined )
                 .Include( e => e.UserJoined )
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null){
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             if( GetUser() == null )
@@ -206,6 +243,13 @@ namespace FdsWeb.Controllers{
             }
 
             return RedirectToAction( "Details", new { id= ur.EventId } );
+        }
+
+        [AllowAnonymous]
+        public IActionResult Search() {
+            ViewData["EventTypes"] = _context.EventTypes.ToList();
+
+            return View();
         }
     }
 }

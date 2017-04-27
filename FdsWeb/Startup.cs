@@ -55,6 +55,8 @@ namespace FdsWeb
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -81,6 +83,8 @@ namespace FdsWeb
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+            app.UseSession();
 
             ctx.EnsureSeedData();
 
