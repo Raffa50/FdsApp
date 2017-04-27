@@ -80,6 +80,7 @@ namespace FdsWeb.Controllers{
                 var ev = new Event() {
                     ApplicationUser = GetUser(),
                     Name = model.Name,
+                    Description = model.Description,
                     EventTypeId = model.EventTypeId,
                     Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
                     Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture)
@@ -120,6 +121,7 @@ namespace FdsWeb.Controllers{
             var eventModel = new CreateEvent() {
                 Id = @event.Id,
                 Name = @event.Name,
+                Description = @event.Description,
                 Latitude = @event.Latitude.ToString( CultureInfo.InvariantCulture ),
                 Longitude = @event.Longitude.ToString( CultureInfo.InvariantCulture ),
                 Schedule = @event.Schedule.Select( e => e.DateTime ).ToList()

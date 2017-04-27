@@ -12,6 +12,9 @@ namespace FdsWeb.Models{
         public virtual string Name { get; set; }
 
         [Required]
+        public virtual string Description { get; set; }
+
+        [Required]
         public virtual string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
