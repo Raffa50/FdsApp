@@ -196,13 +196,15 @@ namespace FdsWeb.Migrations
                 name: "Schedules",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(nullable: false),
-                    DateTime = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateTime = table.Column<DateTime>(nullable: false),
+                    EventId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => new { x.EventId, x.DateTime });
+                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.UniqueConstraint("AK_Schedules_EventId_DateTime", x => new { x.EventId, x.DateTime });
                     table.ForeignKey(
                         name: "FK_Schedules_Events_EventId",
                         column: x => x.EventId,
@@ -215,18 +217,18 @@ namespace FdsWeb.Migrations
                 name: "UserJoinEvents",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApplicationUserId = table.Column<string>(nullable: false),
-                    Id = table.Column<int>(nullable: false),
+                    EventId = table.Column<int>(nullable: false),
                     Review = table.Column<string>(maxLength: 50, nullable: true),
-                    ScheduleDateTime = table.Column<DateTime>(nullable: true),
-                    ScheduleEventId = table.Column<int>(nullable: true),
                     ScheduleId = table.Column<int>(nullable: false),
                     Vote = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserJoinEvents", x => new { x.EventId, x.ApplicationUserId });
+                    table.PrimaryKey("PK_UserJoinEvents", x => x.Id);
+                    table.UniqueConstraint("AK_UserJoinEvents_EventId_ApplicationUserId", x => new { x.EventId, x.ApplicationUserId });
                     table.ForeignKey(
                         name: "FK_UserJoinEvents_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
@@ -240,10 +242,10 @@ namespace FdsWeb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserJoinEvents_Schedules_ScheduleEventId_ScheduleDateTime",
-                        columns: x => new { x.ScheduleEventId, x.ScheduleDateTime },
+                        name: "FK_UserJoinEvents_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
                         principalTable: "Schedules",
-                        principalColumns: new[] { "EventId", "DateTime" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -274,9 +276,9 @@ namespace FdsWeb.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserJoinEvents_ScheduleEventId_ScheduleDateTime",
+                name: "IX_UserJoinEvents_ScheduleId",
                 table: "UserJoinEvents",
-                columns: new[] { "ScheduleEventId", "ScheduleDateTime" });
+                column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",

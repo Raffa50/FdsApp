@@ -113,41 +113,44 @@ namespace FdsWeb.Migrations
 
             modelBuilder.Entity("FdsWeb.Models.Schedule", b =>
                 {
-                    b.Property<int>("EventId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<int>("Id");
+                    b.Property<int>("EventId");
 
-                    b.HasKey("EventId", "DateTime");
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("EventId", "DateTime");
 
                     b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("FdsWeb.Models.UserJoinEvent", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
+
                     b.Property<int>("EventId");
-
-                    b.Property<string>("ApplicationUserId");
-
-                    b.Property<int>("Id");
 
                     b.Property<string>("Review")
                         .HasMaxLength(50);
-
-                    b.Property<DateTime?>("ScheduleDateTime");
-
-                    b.Property<int?>("ScheduleEventId");
 
                     b.Property<int>("ScheduleId");
 
                     b.Property<int?>("Vote");
 
-                    b.HasKey("EventId", "ApplicationUserId");
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("EventId", "ApplicationUserId");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("ScheduleEventId", "ScheduleDateTime");
+                    b.HasIndex("ScheduleId");
 
                     b.ToTable("UserJoinEvents");
                 });
@@ -292,7 +295,7 @@ namespace FdsWeb.Migrations
 
                     b.HasOne("FdsWeb.Models.Schedule", "Schedule")
                         .WithMany("UserJoined")
-                        .HasForeignKey("ScheduleEventId", "ScheduleDateTime");
+                        .HasForeignKey("ScheduleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
