@@ -9,5 +9,7 @@ namespace FdsWeb.Models{
 
     public class ApplicationUser : IdentityUser{
         public virtual Role Role { get; set; }
+
+        public virtual ICollection<UserJoinEvent> UserJoined { get; set; }
     }
 }

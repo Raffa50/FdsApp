@@ -1,42 +1,93 @@
+@using System.Globalization
+@using FdsWeb.ViewModels
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
 @model FdsWeb.Models.Event
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Dettagli</h2>
 
-<div>
-    <h4>Event</h4>
+<div class="col-md-12">
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUserId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-    </dl>
+    <div class="col-md-6">
+        <dl class="dl-horizontal" >
+            <dt>
+                Codice evento
+            </dt>
+            <dd>
+                @Html.DisplayFor( model => model.Id )
+            </dd>
+            <dt>
+                @Html.DisplayNameFor( model => model.Name )
+            </dt>
+            <dd>
+                @Html.DisplayFor( model => model.Name )
+            </dd>
+            <dt>
+                Tipo evento
+            </dt>
+            <dd>
+                @Html.DisplayFor( model => model.EventType.Type )
+            </dd>
+            <dt>
+                Organizzatore
+            </dt>
+            <dd>
+                @Html.DisplayFor( model => model.ApplicationUser.UserName )
+            </dd>
+            <dt>
+                Date
+            </dt>
+            <dd>
+                @foreach( var s in Model.Schedule ) {
+                    <div>@s.DateTime</div>
+                }
+            </dd>
+        </dl>
+    </div>
+    
+    <div class="col-md-6">
+        <div id="googleMap"></div>
+    </div>
 </div>
-<div>
+<div clas="col-md-1">
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@{
+    var reviewed = (bool) ViewData[ "reviewed" ];
+    if( !reviewed ){
+        @Html.Partial( "UserCreateReviewPartial", new UserReview() {EventId = Model.Id}, new ViewDataDictionary( ViewData ) {{"schedules", Model.Schedule}} )
+    }
+}
+
+<div class="col-md-12">
+    @foreach( var r in Model.UserJoined ) {
+        <div>
+            <div>@r.ApplicationUser.UserName</div>
+            <div>@r.Vote</div>
+            <div>@r.Review</div>
+        </div>
+    }
+</div>
+
+<div class="col-md-12"></div>
+
+@section HeadJs {
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
+    <script src="/js/googleMaps.js"></script>
+}
+
+<script>
+    $(document).ready( () => {
+        initMap(false, () => {
+            placeMarker({ lat : @Model.Latitude.ToString(CultureInfo.InvariantCulture),
+                lng: @Model.Longitude.ToString(CultureInfo.InvariantCulture) });
+            map.setZoom(13);
+        });
+    } );
+</script>

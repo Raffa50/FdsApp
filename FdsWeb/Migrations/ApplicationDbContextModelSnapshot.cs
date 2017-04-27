@@ -77,6 +77,8 @@ namespace FdsWeb.Migrations
                     b.Property<string>("ApplicationUserId")
                         .IsRequired();
 
+                    b.Property<int>("EventTypeId");
+
                     b.Property<double>("Latitude");
 
                     b.Property<double>("Longitude");
@@ -88,7 +90,22 @@ namespace FdsWeb.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Event");
+                    b.HasIndex("EventTypeId");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("FdsWeb.Models.EventType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Type")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventTypes");
                 });
 
             modelBuilder.Entity("FdsWeb.Models.Schedule", b =>
@@ -102,6 +119,34 @@ namespace FdsWeb.Migrations
                     b.HasKey("EventId", "DateTime");
 
                     b.ToTable("Schedules");
+                });
+
+            modelBuilder.Entity("FdsWeb.Models.UserJoinEvent", b =>
+                {
+                    b.Property<int>("EventId");
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<int>("Id");
+
+                    b.Property<string>("Review")
+                        .HasMaxLength(30);
+
+                    b.Property<DateTime?>("ScheduleDateTime");
+
+                    b.Property<int?>("ScheduleEventId");
+
+                    b.Property<int>("ScheduleId");
+
+                    b.Property<int?>("Vote");
+
+                    b.HasKey("EventId", "ApplicationUserId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ScheduleEventId", "ScheduleDateTime");
+
+                    b.ToTable("UserJoinEvents");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -217,6 +262,11 @@ namespace FdsWeb.Migrations
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FdsWeb.Models.EventType", "EventType")
+                        .WithMany("Events")
+                        .HasForeignKey("EventTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FdsWeb.Models.Schedule", b =>
@@ -225,6 +275,21 @@ namespace FdsWeb.Migrations
                         .WithMany("Schedule")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FdsWeb.Models.UserJoinEvent", b =>
+                {
+                    b.HasOne("FdsWeb.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserJoined")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("FdsWeb.Models.Event", "Event")
+                        .WithMany("UserJoined")
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("FdsWeb.Models.Schedule", "Schedule")
+                        .WithMany("UserJoined")
+                        .HasForeignKey("ScheduleEventId", "ScheduleDateTime");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

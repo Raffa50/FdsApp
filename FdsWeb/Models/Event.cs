@@ -19,5 +19,10 @@ namespace FdsWeb.Models{
         public virtual double Longitude { get; set; }
 
         public virtual ICollection< Schedule > Schedule { get; set; }
+
+        public virtual int EventTypeId { get; set; }
+        public virtual EventType EventType { get; set; }
+
+        public virtual ICollection< UserJoinEvent > UserJoined { get; set; }
     }
 }

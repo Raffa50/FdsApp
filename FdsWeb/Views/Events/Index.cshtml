@@ -26,6 +26,9 @@
                     @Html.DisplayNameFor( model => model.Name )
                 </th>
                 <th>
+                    Tipo
+                </th>
+                <th>
                     Organizzatore
                 </th>
                 <th></th>
@@ -39,6 +42,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor( modelItem => item.Name )
+                    </td>
+                    <td>
+                        @Html.DisplayFor( modelItem => item.EventType.Type )
                     </td>
                     <td>
                         @Html.DisplayFor( modelItem => item.ApplicationUser.UserName )

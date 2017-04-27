@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using FdsWeb.Attributes;
 using FdsWeb.Data;
+using FdsWeb.Models;
 
 namespace FdsWeb.ViewModels{
     public class CreateEvent{
@@ -17,6 +19,9 @@ namespace FdsWeb.ViewModels{
         [Required]
         public string Longitude { get; set; }
 
+        [EnsureMinimumElements(1, ErrorMessage = "Almeno una data richiesta!")]
         public List< DateTime > Schedule { get; set; }
+
+        public int EventTypeId { get; set; }
     }
 }

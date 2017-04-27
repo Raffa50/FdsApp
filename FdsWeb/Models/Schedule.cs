@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FdsWeb.Models{
@@ -10,5 +11,7 @@ namespace FdsWeb.Models{
 
         public virtual int EventId { get; set; }
         public virtual Event Event { get; set; }
+
+        public virtual ICollection<UserJoinEvent> UserJoined { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using FdsWeb.Data;
 using FdsWeb.Models;
 using FdsWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
 
 namespace FdsWeb.Controllers{
@@ -34,21 +35,27 @@ namespace FdsWeb.Controllers{
         public async Task<IActionResult> Index() {
             ViewData[ "User" ] = GetUser();
 
-            return View(await _context.Event.Include( e => e.ApplicationUser ).Include( e => e.Schedule ).ToListAsync());
+            return View(await _context.Events.Include( e => e.ApplicationUser ).Include( e => e.Schedule ).Include( e => e.EventType ).ToListAsync());
         }
 
         // GET: Events/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id){
             if (id == null){
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
-            var @event = await _context.Event
+            var @event = await _context.Events.Include( e => e.ApplicationUser ).Include( e => e.EventType ).Include( e => e.Schedule )
+                .Include( e => e.UserJoined )
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null){
                 return NotFound();
             }
+
+            if( GetUser() == null )
+                ViewData[ "reviewed" ] = false;
+            else ViewData[ "reviewed" ] =
+                _context.UserJoinEvents.Any( o => o.ApplicationUserId == GetUser().Id && o.EventId == id );
 
             return View(@event);
         }
@@ -58,6 +65,8 @@ namespace FdsWeb.Controllers{
             var usr = GetUser();
             if( usr == null || usr.Role == Role.User )
                 return BadRequest();
+
+            ViewData[ "EventTypes" ] = _context.EventTypes.ToList();
 
             return View();
         }
@@ -71,11 +80,12 @@ namespace FdsWeb.Controllers{
                 var ev = new Event() {
                     ApplicationUser = GetUser(),
                     Name = model.Name,
+                    EventTypeId = model.EventTypeId,
                     Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
                     Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture)
                 };
 
-                _context.Event.Add(ev);
+                _context.Events.Add(ev);
 
                 foreach ( var date in model.Schedule ) {
                     _context.Schedules.Add(new Schedule() {
@@ -87,6 +97,8 @@ namespace FdsWeb.Controllers{
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
+            ViewData["EventTypes"] = _context.EventTypes.ToList();
             return View(model);
         }
 
@@ -96,7 +108,7 @@ namespace FdsWeb.Controllers{
                 return NotFound();
             }
 
-            var @event = await _context.Event.Include( e => e.Schedule ).SingleOrDefaultAsync(m => m.Id == id);
+            var @event = await _context.Events.Include( e => e.Schedule ).SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null){
                 return NotFound();
             }
@@ -120,17 +132,26 @@ namespace FdsWeb.Controllers{
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ApplicationUserId,Latitude,Longitude")] Event @event){
+        public async Task<IActionResult> Edit(int id, CreateEvent @event){
             if (id != @event.Id){
                 return NotFound();
             }
 
             if (ModelState.IsValid){
-                try{
-                    _context.Update(@event);
+                try {
+
+                    var e = _context.Events.First( o => o.Id == id );
+                    e.Name = @event.Name;
+                    e.EventTypeId = @event.EventTypeId;
+                    e.Schedule.Clear();
+                    foreach( var dt in @event.Schedule ) {
+                        e.Schedule.Add( new Schedule(){ DateTime = dt } );
+                    }
+
+                    _context.Update(e);
                     await _context.SaveChangesAsync();
                 }catch (DbUpdateConcurrencyException){
-                    if (!EventExists(@event.Id)){
+                    if (!EventExists(id)){
                         return NotFound();
                     }else{
                         throw;
@@ -147,7 +168,7 @@ namespace FdsWeb.Controllers{
                 return NotFound();
             }
 
-            var @event = await _context.Event
+            var @event = await _context.Events
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (@event == null){
                 return NotFound();
@@ -159,14 +180,30 @@ namespace FdsWeb.Controllers{
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id){
-            var @event = await _context.Event.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Event.Remove(@event);
+            var @event = await _context.Events.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         private bool EventExists(int id){
-            return _context.Event.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public IActionResult UserCreteReview( UserReview ur) {
+            if( ModelState.IsValid && !_context.UserJoinEvents.Any( q => q.ApplicationUserId == GetUser().Id && q.EventId == ur.EventId ) ) {
+                _context.UserJoinEvents.Add( new UserJoinEvent() {
+                    EventId = ur.EventId,
+                    ScheduleId = ur.SheduleId,
+                    ApplicationUserId = GetUser().Id,
+                    Vote = ur.Vote,
+                    Review = ur.Review
+                } );
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction( "Details", new { id= ur.EventId } );
         }
     }
 }
