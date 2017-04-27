@@ -14,6 +14,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		FdsApp\FdsApp\FdsApp.projitems*{51ac2ce8-f451-4967-8615-97a74b593c3e}*SharedItemsImports = 4
+		FdsApp\FdsApp\FdsApp.projitems*{6889a454-f19b-45a0-aea8-74929a40bc72}*SharedItemsImports = 4
 		FdsApp\FdsApp\FdsApp.projitems*{80f8de72-0650-436b-99f7-32f5ea85d092}*SharedItemsImports = 13
 		FdsApp\FdsApp\FdsApp.projitems*{bde4414b-ac1b-4b92-adfa-7dcdc1155381}*SharedItemsImports = 4
 	EndGlobalSection

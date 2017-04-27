@@ -9,7 +9,7 @@ using FdsWeb.Models;
 namespace FdsWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170426174119_Initial")]
+    [Migration("20170427161739_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,9 @@ namespace FdsWeb.Migrations
                     b.Property<string>("ApplicationUserId")
                         .IsRequired();
 
+                    b.Property<string>("Description")
+                        .IsRequired();
+
                     b.Property<int>("EventTypeId");
 
                     b.Property<double>("Latitude");
@@ -131,7 +134,7 @@ namespace FdsWeb.Migrations
                     b.Property<int>("Id");
 
                     b.Property<string>("Review")
-                        .HasMaxLength(30);
+                        .HasMaxLength(50);
 
                     b.Property<DateTime?>("ScheduleDateTime");
 

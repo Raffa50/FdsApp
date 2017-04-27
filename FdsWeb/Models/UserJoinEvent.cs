@@ -12,6 +12,7 @@ namespace FdsWeb.Models{
         public virtual int EventId { get; set; }
         public virtual Event Event { get; set; }
 
+        [Required]
         public virtual string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 

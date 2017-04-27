@@ -124,6 +124,7 @@ namespace FdsWeb.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApplicationUserId = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
                     EventTypeId = table.Column<int>(nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
@@ -217,7 +218,7 @@ namespace FdsWeb.Migrations
                     EventId = table.Column<int>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: false),
                     Id = table.Column<int>(nullable: false),
-                    Review = table.Column<string>(maxLength: 30, nullable: true),
+                    Review = table.Column<string>(maxLength: 50, nullable: true),
                     ScheduleDateTime = table.Column<DateTime>(nullable: true),
                     ScheduleEventId = table.Column<int>(nullable: true),
                     ScheduleId = table.Column<int>(nullable: false),

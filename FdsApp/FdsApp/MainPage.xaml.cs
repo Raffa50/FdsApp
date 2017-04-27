@@ -15,7 +15,10 @@ namespace FdsApp{
             CrossGeolocator.Current.PositionChanged += _geoUpdate;
         }
 
-        private void _geoUpdate(object sender, PositionEventArgs e) {
+        private async void _geoUpdate(object sender, PositionEventArgs e) {
+            Console.WriteLine("Position updated");
+            await PositionSender.SendPosition( 1, e.Position.Latitude, e.Position.Longitude );
+
             MyMap.MoveToRegion( MapSpan.FromCenterAndRadius( 
                 new Xamarin.Forms.Maps.Position(e.Position.Latitude, e.Position.Longitude), 
                 Distance.FromMiles(1))
