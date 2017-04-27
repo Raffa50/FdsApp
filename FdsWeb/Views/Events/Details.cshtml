@@ -9,8 +9,8 @@
 
 <h2>Dettagli</h2>
 
-<div class="col-md-12">
-    <h4>@Html.DisplayFor(model => model.Name)</h4>
+<div class="row">
+    <h4>@Html.DisplayFor(model => model.Name)  <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a></h4>
     <hr />
     <div class="col-md-6">
         <dl class="dl-horizontal" >
@@ -59,10 +59,6 @@
         <div id="googleMap"></div>
     </div>
 </div>
-<div clas="col-md-1">
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @{
     var reviewed = (bool) ViewData[ "reviewed" ];
@@ -71,7 +67,7 @@
     }
 }
 
-<div class="col-md-12">
+<div class="row">
     @foreach( var r in Model.UserJoined ) {
         <div>
             <div>@r.ApplicationUser.UserName</div>
@@ -80,8 +76,6 @@
         </div>
     }
 </div>
-
-<div class="col-md-12"></div>
 
 @section HeadJs {
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
