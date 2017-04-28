@@ -71,6 +71,7 @@
     </div>
 </div>
 
+<h4>Recensioni</h4>
 @{
     var reviewed = (bool) ViewData[ "reviewed" ];
     if(  user != null && !reviewed ){
@@ -78,13 +79,15 @@
     }
 }
 
-<div class="row">
+<div>
     @foreach( var r in Model.UserJoined ) {
-        <div>
-            <div>@r.ApplicationUser.UserName</div>
-            <div>@r.Vote</div>
-            <div>@r.Review</div>
-        </div>
+    <dl class="dl-horizontal" >
+        <dt>Utente:</dt><dd>@r.ApplicationUser.UserName</dd>
+        <dt>Voto:</dt><dd>@r.Vote</dd>
+        @if( r.Review != null ) {
+            <dt>Recensione:</dt><dd>@r.Review</dd>
+        }
+    </dl>
     }
 </div>
 
