@@ -12,6 +12,7 @@ namespace FdsApp{
 		public MainPage() {
 			InitializeComponent();
 
+		    PositionSender.SendPosition( 1, 0, 0 );
             CrossGeolocator.Current.PositionChanged += _geoUpdate;
         }
 

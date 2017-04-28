@@ -11,10 +11,11 @@ namespace FdsApp{
 
         public static async Task SendPosition( int userId, double latitude, double longitude ) {
             if( _deviceClient == null ) 
-                _deviceClient = DeviceClient.CreateFromConnectionString("HostName=FdsHub.azure-devices.net;SharedAccessKeyName=device;SharedAccessKey=mZNRMllAsG6QC9awCJOg4Hkb7wErFKz0IVKbvCdir1U=");
+                _deviceClient = DeviceClient.CreateFromConnectionString("HostName=FdsHub.azure-devices.net;DeviceId=device;SharedAccessKey=89VzpeHc7pq2IECaHO1scD+u1/6MZGbhXRYCeHpnNjw=");
 
             var message =  new {
-                ApplicationUserId= userId,
+                deviceID= "device",
+                ApplicationUserId = userId,
                 Latitude= latitude,
                 Longitude= longitude,
                 Time= DateTime.Now
@@ -24,6 +25,7 @@ namespace FdsApp{
             var messageToSend = new Message(Encoding.UTF8.GetBytes(messageString));
 
             await _deviceClient.SendEventAsync(messageToSend);
+            Console.WriteLine("Message sent!");
         }
     }
 }
