@@ -5,6 +5,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var user = (ApplicationUser) ViewData[ "user" ];
 }
 
 <h2>Dettagli</h2>
@@ -72,7 +73,7 @@
 
 @{
     var reviewed = (bool) ViewData[ "reviewed" ];
-    if( !reviewed ){
+    if(  user != null && !reviewed ){
         @Html.Partial( "UserCreateReviewPartial", new UserReview() {EventId = Model.Id}, new ViewDataDictionary( ViewData ) {{"schedules", Model.Schedule}} )
     }
 }

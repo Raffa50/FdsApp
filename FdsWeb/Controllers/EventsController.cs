@@ -89,10 +89,13 @@ namespace FdsWeb.Controllers{
                 return RedirectToAction("Index");
             }
 
-            if( GetUser() == null )
+            var user = GetUser();
+            ViewData[ "user" ] = user;
+
+            if( user == null )
                 ViewData[ "reviewed" ] = false;
             else ViewData[ "reviewed" ] =
-                _context.UserJoinEvents.Any( o => o.ApplicationUserId == GetUser().Id && o.EventId == id );
+                _context.UserJoinEvents.Any( o => o.ApplicationUserId == user.Id && o.EventId == id );
 
             return View(@event);
         }
