@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FdsWeb.Models.ManageViewModels
-{
-    public class FactorViewModel
-    {
+namespace FdsWeb.Models.ManageViewModels {
+    public class FactorViewModel {
         public string Purpose { get; set; }
     }
 }

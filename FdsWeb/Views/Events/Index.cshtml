@@ -1,22 +1,22 @@
 @using System.Globalization
-@model IEnumerable<FdsWeb.Models.Event>
+@model IEnumerable< FdsWeb.Models.Event > 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData[ "Title" ] = "Index";
     var usr = (ApplicationUser) ViewData[ "User" ];
 }
 
 
 
-@if ( usr != null && usr.Role != Role.User ) {
+@if( usr != null && usr.Role != Role.User ) {
     <p>
         <a asp-action="Create" >Create New</a>
     </p>
 }
 
-<div class="container-fluid">
+<div class="container-fluid" >
     <div class="col-md-5" >
-        <table class="table">
+        <table class="table" >
             <thead>
             <tr>
                 <th>
@@ -36,7 +36,9 @@
             </thead>
             <tbody>
             @if( !Model.Any() ) {
-                <tr><td colspan="5">Nessun Evento trovato!</td></tr>
+                <tr>
+                    <td colspan="5" >Nessun Evento trovato!</td>
+                </tr>
             }
 
             @foreach( var item in Model ) {
@@ -66,23 +68,23 @@
         </table>
     </div>
 
-    <div class="col-md-6">
-        <div id="googleMap"></div>
+    <div class="col-md-6" >
+        <div id="googleMap" ></div>
     </div>
 </div>
 
 @section HeadJs {
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places" ></script>
     <script src="js/googleMaps.js" ></script>
 }
 
 <script>
     $(document).ready(() => {
-        initMap(false, () => {
-            @foreach( var e in Model ) {
-                @:addEventMaker(new google.maps.LatLng( @e.Latitude.ToString(CultureInfo.InvariantCulture), @e.Longitude.ToString(CultureInfo.InvariantCulture) ), "@e.Id" );
-            }
-        });
-
+        initMap(false,
+            () => {
+                @foreach( var e in Model ) {
+                    @:addEventMaker(new google.maps.LatLng(@e.Latitude.ToString( CultureInfo.InvariantCulture ), @e.Longitude.ToString( CultureInfo.InvariantCulture )), "@e.Id");
+                }
+            });
     });
 </script>

@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FdsWeb.Models.AccountViewModels
-{
-    public class VerifyCodeViewModel
-    {
+namespace FdsWeb.Models.AccountViewModels {
+    public class VerifyCodeViewModel {
         [Required]
         public string Provider { get; set; }
 
@@ -16,10 +14,10 @@ namespace FdsWeb.Models.AccountViewModels
 
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display( Name = "Remember this browser?" )]
         public bool RememberBrowser { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display( Name = "Remember me?" )]
         public bool RememberMe { get; set; }
     }
 }

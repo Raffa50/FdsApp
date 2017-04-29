@@ -1,19 +1,21 @@
 @using System.Globalization
 @using FdsWeb.ViewModels
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
-@model FdsWeb.Models.Event
+@model FdsWeb.Models.Event 
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData[ "Title" ] = "Details";
     var user = (ApplicationUser) ViewData[ "user" ];
 }
 
 <h2>Dettagli</h2>
 
-<div class="row">
-    <h4>@Html.DisplayFor(model => model.Name)  <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a></h4>
+<div class="row" >
+    <h4>
+        @Html.DisplayFor( model => model.Name ) <a asp-action="Edit" asp-route-id="@Model.Id" >Edit</a>
+    </h4>
     <hr />
-    <div class="col-md-6">
+    <div class="col-md-6" >
         <dl class="dl-horizontal" >
             <dt>
                 Codice evento
@@ -50,58 +52,62 @@
             </dt>
             <dd>
                 @foreach( var s in Model.Schedule ) {
-                    <div class="row">
-                        <div class="col-md-5">@s.DateTime</div>
-                        <div class="col-md-5"><b>Partecipanti:</b> @s.UserJoined.Count</div>
+                    <div class="row" >
+                        <div class="col-md-5" >@s.DateTime</div>
+                        <div class="col-md-5" >
+                            <b>Partecipanti:</b> @s.UserJoined.Count</div>
                     </div>
                 }
             </dd>
             <dt>&nbsp;</dt>
             <dd>
                 <div class="row" >
-                    <div class="col-md-5"></div>
-                    <div class="col-md-5"><b>Totale:</b> @Model.UserJoined.Count</div>
+                    <div class="col-md-5" ></div>
+                    <div class="col-md-5" >
+                        <b>Totale:</b> @Model.UserJoined.Count</div>
                 </div>
             </dd>
         </dl>
     </div>
-    
-    <div class="col-md-6">
-        <div id="googleMap"></div>
+
+    <div class="col-md-6" >
+        <div id="googleMap" ></div>
     </div>
 </div>
 
 <h4>Recensioni</h4>
 @{
     var reviewed = (bool) ViewData[ "reviewed" ];
-    if(  user != null && !reviewed ){
+    if( user != null && !reviewed ) {
         @Html.Partial( "UserCreateReviewPartial", new UserReview() {EventId = Model.Id}, new ViewDataDictionary( ViewData ) {{"schedules", Model.Schedule}} )
     }
 }
 
 <div>
     @foreach( var r in Model.UserJoined ) {
-    <dl class="dl-horizontal" >
-        <dt>Utente:</dt><dd>@r.ApplicationUser.UserName</dd>
-        <dt>Voto:</dt><dd>@r.Vote</dd>
-        @if( r.Review != null ) {
-            <dt>Recensione:</dt><dd>@r.Review</dd>
-        }
-    </dl>
+        <dl class="dl-horizontal" >
+            <dt>Utente:</dt><dd>@r.ApplicationUser.UserName</dd>
+            <dt>Voto:</dt><dd>@r.Vote</dd>
+            @if( r.Review != null ) {
+                <dt>Recensione:</dt>
+                <dd>@r.Review</dd>
+            }
+        </dl>
     }
 </div>
 
 @section HeadJs {
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places"></script>
-    <script src="/js/googleMaps.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places" ></script>
+    <script src="/js/googleMaps.js" ></script>
 }
 
 <script>
-    $(document).ready( () => {
-        initMap(false, () => {
-            placeMarker({ lat : @Model.Latitude.ToString(CultureInfo.InvariantCulture),
-                lng: @Model.Longitude.ToString(CultureInfo.InvariantCulture) });
-            map.setZoom(13);
-        });
-    } );
+    $(document).ready(() => {
+        initMap(false,
+            () => {
+                placeMarker({ lat : @Model.Latitude.ToString( CultureInfo.InvariantCulture ),
+                    lng : @Model.Longitude.ToString( CultureInfo.InvariantCulture ) });
+                map.setZoom(13);
+            });
+    });
 </script>

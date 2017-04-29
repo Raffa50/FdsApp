@@ -1,7 +1,7 @@
-@model FdsWeb.Models.Event
+@model  FdsWeb.Models.Event 
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData[ "Title" ] = "Delete";
 }
 
 <h2>Delete</h2>
@@ -10,38 +10,38 @@
 <div>
     <h4>Events</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <input type="hidden" asp-for="Id" />
+    <dl class="dl-horizontal" >
+        <input asp-for="Id" type="hidden" />
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor( model => model.Name )
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor( model => model.Name )
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
+            @Html.DisplayNameFor( model => model.ApplicationUserId )
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUserId)
+            @Html.DisplayFor( model => model.ApplicationUserId )
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Latitude)
+            @Html.DisplayNameFor( model => model.Latitude )
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Latitude)
+            @Html.DisplayFor( model => model.Latitude )
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Longitude)
+            @Html.DisplayNameFor( model => model.Longitude )
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Longitude)
+            @Html.DisplayFor( model => model.Longitude )
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            <a asp-action="Index">Back to List</a>
+
+    <form asp-action="Delete" >
+        <div class="form-actions no-color" >
+            <input class="btn btn-default" type="submit" value="Delete" /> |
+            <a asp-action="Index" >Back to List</a>
         </div>
     </form>
 </div>

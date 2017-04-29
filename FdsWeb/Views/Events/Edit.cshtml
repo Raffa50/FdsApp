@@ -1,92 +1,92 @@
-@model FdsWeb.ViewModels.CreateEvent
+@model  FdsWeb.ViewModels.CreateEvent 
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData[ "Title" ] = "Edit";
 }
 
 <h2>Edit</h2>
 
-<form asp-action="Edit">
-    <div class="form-horizontal">
+<form asp-action="Edit" >
+    <div class="form-horizontal" >
         <h4>Events</h4>
         <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            <label class="col-md-2 control-label">Nome</label>
-            <div class="col-md-10">
+        <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+        <input asp-for="Id" type="hidden" />
+        <div class="form-group" >
+            <label class="col-md-2 control-label" >Nome</label>
+            <div class="col-md-10" >
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label class="col-md-2 control-label">Descrizione</label>
-            <div class="col-md-10">
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <span asp-validation-for="Name" class="text-danger" ></span>
             </div>
         </div>
 
-        <input asp-for="Latitude" id="latitudeInput" class="form-control" type="text" style="display: none;" />
-        <input asp-for="Longitude" id="longitudeInput" class="form-control" type="text" style="display: none;" />
-        
-        <div class="form-group">
-            <label class="col-md-2 control-label">Date</label>
-            <div id="schedules" class="col-md-10" >
+        <div class="form-group" >
+            <label class="col-md-2 control-label" >Descrizione</label>
+            <div class="col-md-10" >
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" ></span>
+            </div>
+        </div>
+
+        <input asp-for="Latitude" class="form-control" id="latitudeInput" style="display: none;" type="text" />
+        <input asp-for="Longitude" class="form-control" id="longitudeInput" style="display: none;" type="text" />
+
+        <div class="form-group" >
+            <label class="col-md-2 control-label" >Date</label>
+            <div class="col-md-10" id="schedules" >
                 @foreach( var s in Model.Schedule ) {
                     <div class="input-append" >
                         <input name="Schedule" data-format="dd/MM/yyyy hh:mm:ss" type="text" value="@s" />
                         <span class="add-on" >
-                            <i data-time-icon="icon-time" data-date-icon="icon-calendar" >
+                            <i data-date-icon="icon-calendar" data-time-icon="icon-time" >
                             </i>
                         </span>
                     </div>
                 }
             </div>
-            <div id="addDate">
-                <input type="button" class="form-control" onclick="addDate()" value=" + ">
+            <div id="addDate" >
+                <input class="form-control" onclick="addDate()" type="button" value=" + " >
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <div class="form-group" >
+            <div class="col-md-offset-2 col-md-10" >
+                <input class="btn btn-default" type="submit" value="Save" />
             </div>
         </div>
-        
+
         <div>
-            <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" >Delete</a>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" >Back to List</a>
 </div>
 
 @section Css {
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet" >
+    <link href= "http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"  media="screen" rel="stylesheet" type="text/css" >
 }
 
 @section HeadJs {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" ></script>
 
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js" ></script>
 
-    <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
+    <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js" ></script>
+    <script src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js" ></script>
 }
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync( "_ValidationScriptsPartial" ); }
 }
 
 <script>
     $('.input-append').datetimepicker({
-        format: 'dd/MM/yyyy hh:mm:ss',
-        language: 'pt-BR'
+        format : 'dd/MM/yyyy hh:mm:ss',
+        language : 'pt-BR'
     });
 
     var DtpCount = @Model.Schedule.Count;
@@ -97,8 +97,8 @@
         c.appendTo("#schedules");
 
         $('.input-append').datetimepicker({
-            format: 'dd/MM/yyyy hh:mm:ss',
-            language: 'pt-BR'
+            format : 'dd/MM/yyyy hh:mm:ss',
+            language : 'pt-BR'
         });
     }
 </script>

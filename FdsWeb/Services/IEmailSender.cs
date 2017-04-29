@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FdsWeb.Services
-{
-    public interface IEmailSender
-    {
-        Task SendEmailAsync(string email, string subject, string message);
+namespace FdsWeb.Services {
+    public interface IEmailSender {
+        Task SendEmailAsync( string email, string subject, string message );
     }
 }

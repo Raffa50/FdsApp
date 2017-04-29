@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FdsWeb.Data;
 
-namespace FdsWeb.Models{
-    public class Event{
+namespace FdsWeb.Models {
+    public class Event {
         public virtual int Id { get; set; }
-        [Required, MinLength(DomainConstraints.EventNameMinLen)]
+
+        [Required, MinLength( DomainConstraints.EventNameMinLen )]
         public virtual string Name { get; set; }
 
         [Required]
@@ -16,6 +17,7 @@ namespace FdsWeb.Models{
 
         [Required]
         public virtual string ApplicationUserId { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual double Latitude { get; set; }

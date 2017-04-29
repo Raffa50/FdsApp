@@ -7,11 +7,11 @@ using FdsWeb.Attributes;
 using FdsWeb.Data;
 using FdsWeb.Models;
 
-namespace FdsWeb.ViewModels{
-    public class CreateEvent{
+namespace FdsWeb.ViewModels {
+    public class CreateEvent {
         public int? Id { get; set; }
 
-        [Required, MinLength(DomainConstraints.EventNameMinLen)]
+        [Required, MinLength( DomainConstraints.EventNameMinLen )]
         public string Name { get; set; }
 
         [Required]
@@ -19,10 +19,11 @@ namespace FdsWeb.ViewModels{
 
         [Required]
         public string Latitude { get; set; }
+
         [Required]
         public string Longitude { get; set; }
 
-        [EnsureMinimumElements(1, ErrorMessage = "Almeno una data richiesta!")]
+        [EnsureMinimumElements( 1, ErrorMessage = "Almeno una data richiesta!" )]
         public List< DateTime > Schedule { get; set; }
 
         public int EventTypeId { get; set; }

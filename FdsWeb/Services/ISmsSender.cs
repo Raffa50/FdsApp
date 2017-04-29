@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FdsWeb.Services
-{
-    public interface ISmsSender
-    {
-        Task SendSmsAsync(string number, string message);
+namespace FdsWeb.Services {
+    public interface ISmsSender {
+        Task SendSmsAsync( string number, string message );
     }
 }

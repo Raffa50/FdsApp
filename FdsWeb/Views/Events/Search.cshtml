@@ -1,42 +1,42 @@
-﻿@model FdsWeb.ViewModels.Search
+﻿@model  FdsWeb.ViewModels.Search 
 
 @{
-    ViewData["Title"] = "Search";
+    ViewData[ "Title" ] = "Search";
     var eventTypes = (ICollection< EventType >) ViewData[ "EventTypes" ];
 }
 
-<form asp-action="Index">
-    <div class="form-horizontal">
+<form asp-action="Index" >
+    <div class="form-horizontal" >
         <h4>Cerca eventi</h4>
         <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Date" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Date" type="date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+        <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+        <div class="form-group" >
+            <label asp-for="Date" class="col-md-2 control-label" ></label>
+            <div class="col-md-10" >
+                <input asp-for="Date" class="form-control" type="date" />
+                <span asp-validation-for="Date" class="text-danger" ></span>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="DateBegins" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
+        <div class="form-group" >
+            <label asp-for="DateBegins" class="col-md-2 control-label" ></label>
+            <div class="col-md-10" >
                 <input asp-for="DateBegins" class="form-control" />
-                <span asp-validation-for="DateBegins" class="text-danger"></span>
+                <span asp-validation-for="DateBegins" class="text-danger" ></span>
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="DateFinish" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
+        <div class="form-group" >
+            <label asp-for="DateFinish" class="col-md-2 control-label" ></label>
+            <div class="col-md-10" >
                 <input asp-for="DateFinish" class="form-control" />
-                <span asp-validation-for="DateFinish" class="text-danger"></span>
+                <span asp-validation-for="DateFinish" class="text-danger" ></span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="col-md-2 control-label">Tipo di evento</label>
-            <div class="col-md-10">
-                <select name="EventTypeId" class="form-control" >
-                    <option value="-1">Tutti i tipi di evento</option>
+        <div class="form-group" >
+            <label class="col-md-2 control-label" >Tipo di evento</label>
+            <div class="col-md-10" >
+                <select class="form-control" name="EventTypeId" >
+                    <option value="-1" >Tutti i tipi di evento</option>
                     @foreach( var et in eventTypes ) {
                         <option value="@et.Id" >@et.Type</option>
                     }
@@ -44,31 +44,31 @@
             </div>
         </div>
 
-        <input asp-for="Latitude" id="latitudeInput" class="form-control" type="text" style="display: none;" />
-        <input asp-for="Longitude" id="longitudeInput" class="form-control" type="text" style="display: none;" />
+        <input asp-for="Latitude" class="form-control" id="latitudeInput" style="display: none;" type="text" />
+        <input asp-for="Longitude" class="form-control" id="longitudeInput" style="display: none;" type="text" />
 
-        <div class="form-group">
-            <label asp-for="Radius" class="col-md-2 control-label"></label>
-            <div class="col-md-1">
-                <input asp-for="Radius" class="form-control" /> 
-                <span asp-validation-for="Radius" class="text-danger"></span>
+        <div class="form-group" >
+            <label asp-for="Radius" class="col-md-2 control-label" ></label>
+            <div class="col-md-1" >
+                <input asp-for="Radius" class="form-control" />
+                <span asp-validation-for="Radius" class="text-danger" ></span>
             </div>
-            <span class="col-md-1">Km</span>
+            <span class="col-md-1" >Km</span>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Cerca" class="btn btn-default" />
+        <div class="form-group" >
+            <div class="col-md-offset-2 col-md-10" >
+                <input class="btn btn-default" type="submit" value="Cerca" />
             </div>
         </div>
     </div>
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" >Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync( "_ValidationScriptsPartial" ); }
 }
 
 @section HeadJs {

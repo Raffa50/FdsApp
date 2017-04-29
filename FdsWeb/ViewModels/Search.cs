@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FdsWeb.Models;
 
-namespace FdsWeb.ViewModels{
+namespace FdsWeb.ViewModels {
     public class Search {
         public DateTime? Date { get; set; }
 

@@ -12,22 +12,18 @@ using Microsoft.Extensions.Logging;
 using FdsWeb.Data;
 using FdsWeb.Models;
 using FdsWeb.Services;
+using Newtonsoft.Json;
 
-namespace FdsWeb
-{
-    public class Startup
-    {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+namespace FdsWeb {
+    public class Startup {
+        public Startup( IHostingEnvironment env ) {
+            var builder = new ConfigurationBuilder().SetBasePath( env.ContentRootPath )
+                .AddJsonFile( "appsettings.json", optional: false, reloadOnChange: true )
+                .AddJsonFile( $"appsettings.{env.EnvironmentName}.json", optional: true );
 
-            if (env.IsDevelopment())
-            {
+            if( env.IsDevelopment() ) {
                 // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets<Startup>();
+                builder.AddUserSecrets< Startup >();
             }
 
             builder.AddEnvironmentVariables();
@@ -37,47 +33,43 @@ namespace FdsWeb
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices( IServiceCollection services ) {
             // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext< ApplicationDbContext >(
+                options => options.UseSqlServer( Configuration.GetConnectionString( "DefaultConnection" ) ) );
 
-            services.AddIdentity<ApplicationUser, IdentityRole>( options => {
-                    options.User.RequireUniqueEmail = true;
-                    options.Password.RequireDigit = false;
-                    options.Password.RequiredLength = DomainConstraints.PasswordMinLen;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                } )
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity< ApplicationUser, IdentityRole >( options => {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = DomainConstraints.PasswordMinLen;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            } ).AddEntityFrameworkStores< ApplicationDbContext >().AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddDistributedMemoryCache();
             services.AddSession();
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient< IEmailSender, AuthMessageSender >();
+            services.AddTransient< ISmsSender, AuthMessageSender >();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ApplicationDbContext ctx)
-        {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+        public void Configure( IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            ApplicationDbContext ctx ) {
+            loggerFactory.AddConsole( Configuration.GetSection( "Logging" ) );
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
+            if( env.IsDevelopment() ) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+            } else {
+                app.UseExceptionHandler( "/Home/Error" );
             }
 
             app.UseStaticFiles();
@@ -90,12 +82,9 @@ namespace FdsWeb
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc( routes => {
+                routes.MapRoute( name: "default", template: "{controller=Home}/{action=Index}/{id?}" );
+            } );
         }
     }
 }

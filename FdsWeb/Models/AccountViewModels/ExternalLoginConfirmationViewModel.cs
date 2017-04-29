@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FdsWeb.Models.AccountViewModels
-{
-    public class ExternalLoginConfirmationViewModel
-    {
+namespace FdsWeb.Models.AccountViewModels {
+    public class ExternalLoginConfirmationViewModel {
         [Required]
         [EmailAddress]
         public string Email { get; set; }
