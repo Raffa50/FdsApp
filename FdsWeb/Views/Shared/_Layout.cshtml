@@ -12,7 +12,8 @@
     </environment>
     <environment names="Staging,Production" >
         <link asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-        <link asp-append-version="true" href="~/css/site.min.css" rel="stylesheet" />
+        <!--<link asp-append-version="true" href="~/css/site.min.css" rel="stylesheet" />-->
+        <link href="~/css/site.css" rel="stylesheet" />
     </environment>
 
     @RenderSection( "Css", required: false )

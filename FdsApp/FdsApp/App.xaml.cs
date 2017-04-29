@@ -13,7 +13,7 @@ namespace FdsApp
 		{
 			InitializeComponent();
 
-			MainPage = new FdsApp.MainPage();
+			MainPage = new NavigationPage( new MainPage() );
 		}
 
 		protected override void OnStart ()

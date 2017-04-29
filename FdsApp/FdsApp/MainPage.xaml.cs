@@ -32,7 +32,10 @@ namespace FdsApp{
 
 	    private async void _updateEvents() {
 	        var events= await new ApiHelper().GetEvents();
-	        foreach( var e in events ) {
+
+	        EventsListView.ItemsSource = events;
+
+            foreach ( var e in events ) {
 	            MyMap.Pins.Add( new Pin(){ Label = e.Name, Position = new Xamarin.Forms.Maps.Position(e.Latitude,e.Longitude)} );
 	        }
 	    }
