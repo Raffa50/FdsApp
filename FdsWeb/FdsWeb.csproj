@@ -50,5 +50,8 @@
     <Folder Include="Migrations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fds.Models\Fds.Models.csproj" />
+  </ItemGroup>
 
 </Project>

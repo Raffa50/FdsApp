@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using FdsWeb.Data;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FdsWeb.Models {
-    public class UserJoinEvent {
+namespace Fds.Models {
+    public class UserJoinEvent<TUser> where TUser : IUser {
         public virtual int Id { get; set; }
 
         public virtual int EventId { get; set; }
-        public virtual Event Event { get; set; }
+        public virtual Event<TUser> Event { get; set; }
 
         [Required]
         public virtual string ApplicationUserId { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual TUser ApplicationUser { get; set; }
 
         public virtual int ScheduleId { get; set; }
-        public virtual Schedule Schedule { get; set; }
+        public virtual Schedule<TUser> Schedule { get; set; }
 
         [Range( 0, DomainConstraints.VoteMax )]
         public virtual int? Vote { get; set; }

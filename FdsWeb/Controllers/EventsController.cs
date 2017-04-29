@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Fds.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -85,7 +86,7 @@ namespace FdsWeb.Controllers {
         [HttpPost, ValidateAntiForgeryToken]
         public async Task< IActionResult > Create( CreateEvent model ) {
             if( ModelState.IsValid ) {
-                var ev = new Event() {
+                var ev = new Event<ApplicationUser>() {
                     ApplicationUser = GetUser(),
                     Name = model.Name,
                     Description = model.Description,
@@ -97,7 +98,7 @@ namespace FdsWeb.Controllers {
                 _context.Events.Add( ev );
 
                 foreach( var date in model.Schedule ) {
-                    _context.Schedules.Add( new Schedule() {DateTime = date, Event = ev} );
+                    _context.Schedules.Add( new Schedule<ApplicationUser>() {DateTime = date, Event = ev} );
                 }
 
                 await _context.SaveChangesAsync();
@@ -151,7 +152,7 @@ namespace FdsWeb.Controllers {
                     e.EventTypeId = @event.EventTypeId;
                     e.Schedule.Clear();
                     foreach( var dt in @event.Schedule ) {
-                        e.Schedule.Add( new Schedule() {DateTime = dt} );
+                        e.Schedule.Add( new Schedule<ApplicationUser>() {DateTime = dt} );
                     }
 
                     _context.Update( e );
@@ -197,7 +198,7 @@ namespace FdsWeb.Controllers {
         public IActionResult UserCreteReview( UserReview ur ) {
             if( ModelState.IsValid &&
                 !_context.UserJoinEvents.Any( q => q.ApplicationUserId == GetUser().Id && q.EventId == ur.EventId ) ) {
-                _context.UserJoinEvents.Add( new UserJoinEvent() {
+                _context.UserJoinEvents.Add( new UserJoinEvent<ApplicationUser>() {
                     EventId = ur.EventId,
                     ScheduleId = ur.SheduleId,
                     ApplicationUserId = GetUser().Id,

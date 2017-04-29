@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Fds.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace FdsWeb.Controllers.Api {
 
         public EventsController( ApplicationDbContext context ) { _context = context; }
 
-        public IQueryable<Event> GetSearchEvents(Search search) {
+        public IQueryable<Event<ApplicationUser>> GetSearchEvents(Search search) {
             var qq = _context.Events.Include( e => e.Schedule )
                 .Include( e => e.EventType ).Include( e => e.ApplicationUser );
 
@@ -52,12 +53,12 @@ namespace FdsWeb.Controllers.Api {
 
         // GET: api/Events
         [HttpGet]
-        public IEnumerable< Event > GetEvents() {
+        public IEnumerable< Event<ApplicationUser>> GetEvents() {
             return GetSearchEvents(null);
         }
 
         [HttpPost]
-        public IEnumerable< Event > GetEvents( Search search ) {
+        public IEnumerable< Event<ApplicationUser>> GetEvents( Search search ) {
             return GetSearchEvents( search );
         }
 
@@ -79,7 +80,7 @@ namespace FdsWeb.Controllers.Api {
 
         // POST: api/Events
         [HttpPost]
-        public async Task< IActionResult > PostEvent( [FromBody] Event @event ) {
+        public async Task< IActionResult > PostEvent( [FromBody] Event<ApplicationUser> @event ) {
             if( !ModelState.IsValid ) {
                 return BadRequest( ModelState );
             }

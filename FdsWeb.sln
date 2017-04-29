@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FdsWeb", "FdsWeb\FdsWeb.csproj", "{A3A6C746-93FA-474A-953A-B6893006742C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fds.Models", "Fds.Models\Fds.Models.csproj", "{667B261C-8AAB-4A69-9629-505E3155205D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A3A6C746-93FA-474A-953A-B6893006742C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A6C746-93FA-474A-953A-B6893006742C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3A6C746-93FA-474A-953A-B6893006742C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667B261C-8AAB-4A69-9629-505E3155205D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667B261C-8AAB-4A69-9629-505E3155205D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667B261C-8AAB-4A69-9629-505E3155205D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667B261C-8AAB-4A69-9629-505E3155205D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

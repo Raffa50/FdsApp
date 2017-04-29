@@ -1,8 +1,9 @@
-﻿@model  FdsWeb.ViewModels.Search 
+﻿@using Fds.Models
+@model  FdsWeb.ViewModels.Search 
 
 @{
     ViewData[ "Title" ] = "Search";
-    var eventTypes = (ICollection< EventType >) ViewData[ "EventTypes" ];
+    var eventTypes = (ICollection< EventType<ApplicationUser>>) ViewData[ "EventTypes" ];
 }
 
 <form asp-action="Index" >
