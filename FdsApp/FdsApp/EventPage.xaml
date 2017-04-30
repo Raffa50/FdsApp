@@ -18,13 +18,15 @@
     <ScrollView>
         <StackLayout x:Name="EventDetail">
             <StackLayout Orientation="Horizontal"><Label Text="Titolo: " /><Label Text="{Binding Name}" /></StackLayout>
+            <StackLayout Orientation="Horizontal"><Label Text="Tipo: " /><Label Text="{Binding Path=EventType.Type}" /></StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Organizzatore: " />
-                    <Label Text="{Binding ApplicationUser.Name}" />
+                <Label Text="{Binding Path=ApplicationUser.UserName}" />
             </StackLayout>
-            <Label Text="{Binding Description}"></Label>
+            <Label Text="{Binding Description}" />
 
-            <ListView ItemTemplate="{StaticResource ScheduleTemplate}" ItemsSource="{Binding Schedules}" />
+            <Label Text="Orari: " />
+            <ListView ItemTemplate="{StaticResource ScheduleTemplate}" ItemsSource="{Binding Schedule}" />
         </StackLayout>
     </ScrollView>
     
