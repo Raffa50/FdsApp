@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FdsApp.EventPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ScheduleTemplate">
+                <ViewCell>
+                    <ViewCell.View>
+                        <Label Text="{Binding DateTime}" />
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <StackLayout x:Name="EventDetail">
+            <StackLayout Orientation="Horizontal"><Label Text="Titolo: " /><Label Text="{Binding Name}" /></StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Organizzatore: " />
+                    <Label Text="{Binding ApplicationUser.Name}" />
+            </StackLayout>
+            <Label Text="{Binding Description}"></Label>
+
+            <ListView ItemTemplate="{StaticResource ScheduleTemplate}" ItemsSource="{Binding Schedules}" />
+        </StackLayout>
+    </ScrollView>
+    
+</ContentPage>

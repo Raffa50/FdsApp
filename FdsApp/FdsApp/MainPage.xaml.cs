@@ -14,15 +14,10 @@ namespace FdsApp{
 	public partial class MainPage : ContentPage	{
 	    private const string apiUrl = "http://fdsge.azurewebsites.net/api";
 	    readonly HttpClient _client = new HttpClient();
+        readonly Dictionary<int,Pin> _pinsDictionary= new Dictionary< int, Pin >();
 
         public MainPage() {
 			InitializeComponent();
-
-            /*var response = _client.GetAsync(apiUrl + "/Events").Result;
-            if (!response.IsSuccessStatusCode) throw new Exception();
-            var content = response.Content.ReadAsStringAsync().Result;
-            var events = JsonConvert.DeserializeObject< ICollection< Event< User > > >( content );
-            Console.WriteLine(events.Count);*/
             
             _updateEvents();
 
@@ -36,12 +31,18 @@ namespace FdsApp{
 	        EventsListView.ItemsSource = events;
 
             foreach ( var e in events ) {
-	            MyMap.Pins.Add( new Pin(){ Label = e.Name, Position = new Xamarin.Forms.Maps.Position(e.Latitude,e.Longitude)} );
+                var pin = new Pin() {
+                    Label = e.Name,
+                    Position = new Xamarin.Forms.Maps.Position( e.Latitude, e.Longitude )
+                };
+
+                _pinsDictionary.Add( e.Id, pin );
+
+                MyMap.Pins.Add( pin );
 	        }
 	    }
 
         private async void _geoUpdate(object sender, PositionEventArgs e) {
-            Console.WriteLine("Position updated");
             await PositionSender.SendPosition( "1", e.Position.Latitude, e.Position.Longitude );
 
             MyMap.MoveToRegion( MapSpan.FromCenterAndRadius( 
@@ -49,5 +50,18 @@ namespace FdsApp{
                 Distance.FromMiles(1))
             );
         }
-    }
+
+	    private void EventIdOnClicked( object sender, EventArgs e ) {
+	        var btn = (Button) sender;
+	        var eventId = int.Parse( btn.Text );
+
+            MyMap.MoveToRegion( MapSpan.FromCenterAndRadius( _pinsDictionary[eventId].Position, Distance.FromMiles(1) ) );
+	    }
+
+	    private void EventNameOnClicked( object sender, EventArgs e ) {
+	        var btn = (Button) sender;
+	        var ev= btn.BindingContext as Event<User>;
+	        Navigation.PushAsync( new EventPage(ev) );
+	    }
+	}
 }

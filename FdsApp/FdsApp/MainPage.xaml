@@ -12,8 +12,8 @@
                     <ViewCell.View>
                         <StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Id}"></Label>
-                                <Label Text="{Binding Name}"></Label>
+                                <Button Text="{Binding Id}" Clicked="EventIdOnClicked"/>
+                                <Button Text="{Binding Name}" Clicked="EventNameOnClicked" />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell.View>
@@ -22,8 +22,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
-    <StackLayout VerticalOptions="StartAndExpand" Padding="30">
-        <maps:Map WidthRequest="320" HeightRequest="200"
+    <StackLayout VerticalOptions="StartAndExpand">
+        <maps:Map  HorizontalOptions="FillAndExpand" HeightRequest="200"
             x:Name="MyMap"
             IsShowingUser="true"
             MapType="Hybrid" />
