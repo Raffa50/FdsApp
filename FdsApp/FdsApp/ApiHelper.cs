@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,17 +8,43 @@ using Fds.Models;
 using Newtonsoft.Json;
 
 namespace FdsApp{
-    public class ApiHelper {
-        private const string apiUrl = "http://fdsge.azurewebsites.net/api";
-        readonly HttpClient _client= new HttpClient();
+    public static class ApiHelper {
+        const string apiUrl = "http://fdsge.azurewebsites.net/api";
+        static readonly HttpClient _client= new HttpClient();
+        public static User currentUser { get; private set; }
 
-        public async Task<ICollection<Event<User>>> GetEvents() {
+        public static async Task<IEnumerable<Event<User>>> GetEvents() {
             var response = await _client.GetAsync( apiUrl + "/Events" );
 
             if ( !response.IsSuccessStatusCode ) throw new Exception();
 
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<ICollection<Event<User>>>(content);
+            return JsonConvert.DeserializeObject<IEnumerable<Event<User>>>(content);
+        }
+
+        public static async Task< IEnumerable< UserJoinEvent< User > > > GetEventReviews( int id ) {
+            var response = _client.GetAsync( apiUrl + "/Events/" + id ).Result;
+            if (!response.IsSuccessStatusCode) throw new Exception();
+            var content = await response.Content.ReadAsStringAsync();
+            var ev= JsonConvert.DeserializeObject< Event<User> >( content );
+            return ev.UserJoined;
+        }
+
+        public static async Task<bool> Login( string email, string password ) {
+            var json = JsonConvert.SerializeObject( new UserLogin(){Email = email, Password = password} );
+            var response = _client.PostAsync(apiUrl + "Login", new StringContent(json, Encoding.UTF8, "application/json")).Result;
+
+            if( !response.IsSuccessStatusCode )
+                return false;
+
+            var content = await response.Content.ReadAsStringAsync();
+            try {
+                currentUser = JsonConvert.DeserializeObject<User>( content );
+            } catch( Exception e ) {
+                return false;
+            }
+
+            return true;
         }
     }
 }

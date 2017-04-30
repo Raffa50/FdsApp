@@ -27,6 +27,8 @@
 
             <Label Text="Orari: " />
             <ListView ItemTemplate="{StaticResource ScheduleTemplate}" ItemsSource="{Binding Schedule}" />
+            
+            <Button Text="Vai alle recensioni" Clicked="EventReviewClicked" />
         </StackLayout>
     </ScrollView>
     

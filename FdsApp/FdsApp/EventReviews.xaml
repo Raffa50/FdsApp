@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FdsApp.EventReviews">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ReviewTemplate">
+                <ViewCell>
+                    <ViewCell.View>
+                        <StackLayout>
+                            <Label Text="{Binding Path=ApplicationUser.UserName}" />
+                            <Label Text="{Binding Vote}" />
+                            <Label Text="{Binding Review}" />
+                        </StackLayout>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Voto: " />
+            <Stepper  x:Name="VoteStepper" HorizontalOptions="FillAndExpand" Minimum="0" Maximum="5"/>
+        </StackLayout>
+        <Label Text="Recensione: " />
+        <Editor x:Name="ReviewEditor" />
+        <Button Text="Recensisci" HorizontalOptions="FillAndExpand" Clicked="CreateReviewClicked" />
+        
+        <ScrollView>
+            <ListView x:Name="ReviewsList" ItemTemplate="{StaticResource ReviewTemplate}" />
+        </ScrollView>
+    </StackLayout>
+
+</ContentPage>

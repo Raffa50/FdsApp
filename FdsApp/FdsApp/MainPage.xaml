@@ -23,7 +23,7 @@
     </ContentPage.Resources>
     
     <StackLayout VerticalOptions="StartAndExpand">
-        <maps:Map  HorizontalOptions="FillAndExpand" HeightRequest="200"
+        <maps:Map HorizontalOptions="FillAndExpand" HeightRequest="200"
             x:Name="MyMap"
             IsShowingUser="true"
             MapType="Hybrid" />

@@ -35,5 +35,7 @@ namespace FdsWeb.Data {
             builder.Entity< ApplicationUser >( e => e.HasMany( o => o.UserJoined ).WithOne( o => o.ApplicationUser )
                 .OnDelete( DeleteBehavior.Restrict ) );
         }
+
+        public DbSet<FdsWeb.Models.ApplicationUser> ApplicationUser { get; set; }
     }
 }

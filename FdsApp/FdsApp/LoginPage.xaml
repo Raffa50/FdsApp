@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FdsApp.LoginPage">
+    
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Email: " />
+            <Entry x:Name="EmailText" HorizontalOptions="FillAndExpand" /></StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Password: " />
+            <Entry x:Name="PasswordText" HorizontalOptions="FillAndExpand"/></StackLayout>
+        <Button Text="Login" Clicked="LoginClicked"/>
+    </StackLayout>
+    
+</ContentPage>

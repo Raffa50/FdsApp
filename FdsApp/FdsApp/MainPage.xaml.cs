@@ -26,7 +26,7 @@ namespace FdsApp{
         }
 
 	    private async void _updateEvents() {
-	        var events= await new ApiHelper().GetEvents();
+	        var events= await ApiHelper.GetEvents();
 
 	        EventsListView.ItemsSource = events;
 

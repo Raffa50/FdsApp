@@ -69,26 +69,13 @@ namespace FdsWeb.Controllers.Api {
                 return BadRequest( ModelState );
             }
 
-            var @event = await _context.Events.SingleOrDefaultAsync( m => m.Id == id );
+            var @event = await _context.Events.Include(e => e.UserJoined).ThenInclude( o => o.ApplicationUser ).SingleOrDefaultAsync( m => m.Id == id );
 
             if( @event == null ) {
                 return NotFound();
             }
 
             return Ok( @event );
-        }
-
-        // POST: api/Events
-        [HttpPost]
-        public async Task< IActionResult > PostEvent( [FromBody] Event<ApplicationUser> @event ) {
-            if( !ModelState.IsValid ) {
-                return BadRequest( ModelState );
-            }
-
-            _context.Events.Add( @event );
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction( "GetEvent", new {id = @event.Id}, @event );
         }
 
         private bool EventExists( int id ) { return _context.Events.Any( e => e.Id == id ); }

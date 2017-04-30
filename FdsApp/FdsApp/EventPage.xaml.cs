@@ -15,5 +15,12 @@ namespace FdsApp{
 
 		    EventDetail.BindingContext = @event;
 		}
+
+	    private void EventReviewClicked( object sender, EventArgs e ) {
+	        var btn = (Button) sender;
+	        var ev = btn.BindingContext as Event< User >;
+
+	        Navigation.PushAsync( new EventReviews( ev.Id ) );
+	    }
 	}
 }
