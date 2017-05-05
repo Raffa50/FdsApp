@@ -12,8 +12,6 @@ using Fds.Models;
 
 namespace FdsApp{
 	public partial class MainPage : ContentPage	{
-	    private const string apiUrl = "http://fdsge.azurewebsites.net/api";
-	    readonly HttpClient _client = new HttpClient();
         readonly Dictionary<int,Pin> _pinsDictionary= new Dictionary< int, Pin >();
 
         public MainPage() {
@@ -22,7 +20,7 @@ namespace FdsApp{
             _updateEvents();
 
             //PositionSender.SendPosition( "1", 44.4056499, 8.946256 );
-            //CrossGeolocator.Current.PositionChanged += _geoUpdate;
+            CrossGeolocator.Current.PositionChanged += _geoUpdate;
         }
 
 	    private async void _updateEvents() {
