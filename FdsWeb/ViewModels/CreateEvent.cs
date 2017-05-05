@@ -25,7 +25,7 @@ namespace FdsWeb.ViewModels {
         public string Longitude { get; set; }
 
         [EnsureMinimumElements( 1, ErrorMessage = "Almeno una data richiesta!" )]
-        public List< DateTime > Schedule { get; set; }
+        public ICollection< string > Schedule { get; set; }
 
         public int EventTypeId { get; set; }
     }

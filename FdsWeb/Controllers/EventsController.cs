@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Fds.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -98,7 +99,12 @@ namespace FdsWeb.Controllers {
                 _context.Events.Add( ev );
 
                 foreach( var date in model.Schedule ) {
-                    _context.Schedules.Add( new Schedule<ApplicationUser>() {DateTime = date, Event = ev} );
+                    try {
+                        _context.Schedules.Add(
+                            new Schedule< ApplicationUser >() {DateTime = DateTime.Parse( date, new CultureInfo("it-IT")), Event = ev} );
+                    } catch( Exception ex ) {
+                        Console.Write(ex.Message);
+                    }
                 }
 
                 await _context.SaveChangesAsync();
@@ -130,7 +136,7 @@ namespace FdsWeb.Controllers {
                 Description = @event.Description,
                 Latitude = @event.Latitude.ToString( CultureInfo.InvariantCulture ),
                 Longitude = @event.Longitude.ToString( CultureInfo.InvariantCulture ),
-                Schedule = @event.Schedule.Select( e => e.DateTime ).ToList()
+                Schedule = @event.Schedule.Select( e => e.DateTime.ToString(new CultureInfo("it-IT")) ).ToList()
             };
 
             return View( eventModel );
@@ -152,7 +158,7 @@ namespace FdsWeb.Controllers {
                     e.EventTypeId = @event.EventTypeId;
                     e.Schedule.Clear();
                     foreach( var dt in @event.Schedule ) {
-                        e.Schedule.Add( new Schedule<ApplicationUser>() {DateTime = dt} );
+                        e.Schedule.Add( new Schedule<ApplicationUser>() {DateTime = DateTime.Parse( dt, new CultureInfo("it-IT")) } );
                     }
 
                     _context.Update( e );
