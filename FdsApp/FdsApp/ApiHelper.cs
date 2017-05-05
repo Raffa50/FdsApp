@@ -13,20 +13,20 @@ namespace FdsApp{
         static readonly HttpClient _client= new HttpClient();
         public static User currentUser { get; private set; }
 
-        public static async Task<IEnumerable<Event<User>>> GetEvents() {
+        public static async Task<IEnumerable<Event>> GetEvents() {
             var response = await _client.GetAsync( apiUrl + "/Events" );
 
             if ( !response.IsSuccessStatusCode ) throw new Exception();
 
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<IEnumerable<Event<User>>>(content);
+            return JsonConvert.DeserializeObject<IEnumerable<Event>>(content);
         }
 
-        public static async Task< IEnumerable< UserJoinEvent< User > > > GetEventReviews( int id ) {
+        public static async Task< IEnumerable< UserJoinEvent > > GetEventReviews( int id ) {
             var response = _client.GetAsync( apiUrl + "/Events/" + id ).Result;
             if (!response.IsSuccessStatusCode) throw new Exception();
             var content = await response.Content.ReadAsStringAsync();
-            var ev= JsonConvert.DeserializeObject< Event<User> >( content );
+            var ev= JsonConvert.DeserializeObject< Event >( content );
             return ev.UserJoined;
         }
 

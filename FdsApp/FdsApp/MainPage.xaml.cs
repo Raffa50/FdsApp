@@ -58,7 +58,7 @@ namespace FdsApp{
 
 	    private void EventNameOnClicked( object sender, EventArgs e ) {
 	        var btn = (Button) sender;
-	        var ev= btn.BindingContext as Event<User>;
+	        var ev= btn.BindingContext as Event;
 	        Navigation.PushAsync( new EventPage(ev) );
 	    }
 	}

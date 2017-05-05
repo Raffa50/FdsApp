@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace FdsApp{
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EventPage : ContentPage{
-		public EventPage (Event<User> @event){
+		public EventPage (Event @event){
 			InitializeComponent ();
 
 		    EventDetail.BindingContext = @event;
@@ -18,7 +18,7 @@ namespace FdsApp{
 
 	    private void EventReviewClicked( object sender, EventArgs e ) {
 	        var btn = (Button) sender;
-	        var ev = btn.BindingContext as Event< User >;
+	        var ev = btn.BindingContext as Event;
 
 	        Navigation.PushAsync( new EventReviews( ev.Id ) );
 	    }

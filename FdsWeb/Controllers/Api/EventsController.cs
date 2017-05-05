@@ -18,7 +18,7 @@ namespace FdsWeb.Controllers.Api {
 
         public EventsController( ApplicationDbContext context ) { _context = context; }
 
-        public IQueryable<Event<ApplicationUser>> GetSearchEvents(Search search) {
+        public IQueryable<Event> GetSearchEvents(Search search) {
             var qq = _context.Events.Include( e => e.Schedule )
                 .Include( e => e.EventType ).Include( e => e.ApplicationUser );
 
@@ -53,12 +53,12 @@ namespace FdsWeb.Controllers.Api {
 
         // GET: api/Events
         [HttpGet]
-        public IEnumerable< Event<ApplicationUser>> GetEvents() {
+        public IEnumerable< Event > GetEvents() {
             return GetSearchEvents(null);
         }
 
         [HttpPost]
-        public IEnumerable< Event<ApplicationUser>> GetEvents( Search search ) {
+        public IEnumerable< Event > GetEvents( Search search ) {
             return GetSearchEvents( search );
         }
 

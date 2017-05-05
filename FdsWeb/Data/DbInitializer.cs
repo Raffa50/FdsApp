@@ -11,9 +11,9 @@ namespace FdsWeb.Data {
             if( ctx.EventTypes.Any() )
                 return;
 
-            ctx.EventTypes.AddRange( new EventType<ApplicationUser>() {Type = "Conferenza"}, new EventType<ApplicationUser>() {Type = "Mostra"},
-                new EventType<ApplicationUser>() {Type = "Laboratorio"}, new EventType<ApplicationUser>() {Type = "Spettacolo"},
-                new EventType<ApplicationUser>() {Type = "Speciale"} );
+            ctx.EventTypes.AddRange( new EventType() {Type = "Conferenza"}, new EventType() {Type = "Mostra"},
+                new EventType() {Type = "Laboratorio"}, new EventType() {Type = "Spettacolo"},
+                new EventType() {Type = "Speciale"} );
             ctx.SaveChanges();
         }
     }
