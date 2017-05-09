@@ -1,4 +1,7 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +50,13 @@
                 <li>
                     <a asp-action="Search" asp-area="" asp-controller="Events">Cerca eventi</a>
                 </li>
+                
+                @if( SignInManager.IsSignedIn( User ) && UserManager.GetUserAsync( User ).Result.Role > 0 ) {
+                    <li>
+                        <a asp-action="Index" asp-area="" asp-controller="EventsManager">Manage events</a>
+                    </li>
+                }
+
                 <li>
                     <a asp-action="About" asp-area="" asp-controller="Home" >About</a>
                 </li>

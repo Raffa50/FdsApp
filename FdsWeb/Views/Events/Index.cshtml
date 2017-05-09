@@ -1,18 +1,9 @@
 @using System.Globalization
 @using Fds.Models
-@model IEnumerable< Fds.Models.Event > 
+@model IEnumerable< Event > 
 
 @{
     ViewData[ "Title" ] = "Index";
-    var usr = (ApplicationUser) ViewData[ "User" ];
-}
-
-
-
-@if( usr != null && usr.Role != Role.User ) {
-    <p>
-        <a asp-action="Create" >Create New</a>
-    </p>
 }
 
 <div class="container-fluid" >
@@ -57,10 +48,6 @@
                         @Html.DisplayFor( modelItem => item.ApplicationUser.UserName )
                     </td>
                     <td>
-                        @if( usr != null && item.ApplicationUserId == usr.Id ) {
-                            <a asp-action="Edit" asp-route-id="@item.Id" >Edit</a>
-                            @:|
-                        }
                         <a asp-action="Details" asp-route-id="@item.Id" >Details</a>
                     </td>
                 </tr>
