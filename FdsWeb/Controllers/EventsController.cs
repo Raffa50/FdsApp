@@ -49,7 +49,7 @@ namespace FdsWeb.Controllers {
             }
 
             var @event = await _context.Events.Include( e => e.ApplicationUser ).Include( e => e.EventType )
-                .Include( e => e.Schedule ).ThenInclude( uj => uj.UserJoined ).Include( e => e.UserJoined )
+                .Include( e => e.Schedule ).ThenInclude( uj => uj.UserJoined ).Include( e => e.UserJoined ).ThenInclude( e => e.ApplicationUser )
                 .SingleOrDefaultAsync( m => m.Id == id );
             if( @event == null ) {
                 return RedirectToAction( "Index" );

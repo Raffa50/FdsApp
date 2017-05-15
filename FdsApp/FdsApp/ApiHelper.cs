@@ -10,12 +10,12 @@ using Newtonsoft.Json;
 
 namespace FdsApp{
     public static class ApiHelper {
-        const string apiUrl = "http://fdsge.azurewebsites.net/api";
+        const string apiUrl = "http://fdsge.azurewebsites.net/api/";
         static readonly HttpClient _client= new HttpClient();
         public static User currentUser { get; private set; }
 
         public static async Task<IEnumerable<Event>> GetEvents() {
-            var response = await _client.GetAsync( apiUrl + "/Events" );
+            var response = await _client.GetAsync( apiUrl + "Events" );
 
             if ( !response.IsSuccessStatusCode ) throw new Exception();
 
@@ -24,7 +24,7 @@ namespace FdsApp{
         }
 
         public static async Task< IEnumerable< UserJoinEvent > > GetEventReviews( int id ) {
-            var response = _client.GetAsync( apiUrl + "/Events/" + id ).Result;
+            var response = _client.GetAsync( apiUrl + "Events/" + id ).Result;
             if (!response.IsSuccessStatusCode) throw new Exception();
             var content = await response.Content.ReadAsStringAsync();
             var ev= JsonConvert.DeserializeObject< Event >( content );
@@ -33,7 +33,13 @@ namespace FdsApp{
 
         public static async Task<bool> Login( string email, string password ) {
             var json = JsonConvert.SerializeObject( new UserLogin(){Email = email, Password = password} );
-            var response = _client.PostAsync(apiUrl + "/Login", new StringContent(json, Encoding.UTF8, "application/json")).Result;
+            HttpResponseMessage response = null;
+            try {
+                response = _client.PostAsync( apiUrl + "Login",
+                    new StringContent( json, Encoding.UTF8, "application/json" ) ).Result;
+            } catch( Exception e ) {
+                return false;
+            }
 
             if( !response.IsSuccessStatusCode )
                 return false;

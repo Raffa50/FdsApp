@@ -34,7 +34,7 @@ namespace FdsWeb.Controllers.Api{
                 return BadRequest();
             }
 
-            var user = _context.Users.FirstOrDefault(u => u.Email == model.Email);
+            var user = _context.Users.FirstOrDefault(u => u.Email.ToLower() == model.Email.ToLower() );
             if (user == null){
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return BadRequest();

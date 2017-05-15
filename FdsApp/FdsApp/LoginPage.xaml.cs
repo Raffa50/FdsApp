@@ -17,7 +17,7 @@ namespace FdsApp{
 	    private void LoginClicked( object sender, EventArgs e ) {
 	        if( ApiHelper.Login( EmailText.Text, PasswordText.Text ).Result ) {
 	            DisplayAlert( "Login", "Ora sei loggato!", "Ok" );
-	            Navigation.PopAsync();
+	            Navigation.PushModalAsync( new NavigationPage( new MainPage() ) );
 	        } else
 	            DisplayAlert( "Login", "Errore di login!", "Ok" );
 	    }

@@ -9,13 +9,13 @@ namespace FdsApp{
     public static class PositionSender{
         private static DeviceClient _deviceClient;
 
-        public static async Task SendPosition( string userId, double latitude, double longitude ) {
+        public static async Task SendPosition( double latitude, double longitude ) {
             if( _deviceClient == null ) 
                 _deviceClient = DeviceClient.CreateFromConnectionString("HostName=FdsHub.azure-devices.net;DeviceId=device;SharedAccessKey=89VzpeHc7pq2IECaHO1scD+u1/6MZGbhXRYCeHpnNjw=");
 
             var message =  new {
                 deviceID= "device",
-                ApplicationUserId = userId,
+                ApplicationUserId = ApiHelper.currentUser.Id,
                 Latitude= latitude,
                 Longitude= longitude,
                 Time= DateTime.Now

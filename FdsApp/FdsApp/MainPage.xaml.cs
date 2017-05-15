@@ -19,7 +19,6 @@ namespace FdsApp{
             
             _updateEvents();
 
-            //PositionSender.SendPosition( "1", 44.4056499, 8.946256 );
             CrossGeolocator.Current.PositionChanged += _geoUpdate;
         }
 
@@ -41,7 +40,7 @@ namespace FdsApp{
 	    }
 
         private async void _geoUpdate(object sender, PositionEventArgs e) {
-            await PositionSender.SendPosition( "1", e.Position.Latitude, e.Position.Longitude );
+            await PositionSender.SendPosition( e.Position.Latitude, e.Position.Longitude );
 
             MyMap.MoveToRegion( MapSpan.FromCenterAndRadius( 
                 new Xamarin.Forms.Maps.Position(e.Position.Latitude, e.Position.Longitude), 
@@ -61,5 +60,7 @@ namespace FdsApp{
 	        var ev= btn.BindingContext as Event;
 	        Navigation.PushAsync( new EventPage(ev) );
 	    }
-	}
+
+	    public bool BackPressed() { return false; }
+    }
 }

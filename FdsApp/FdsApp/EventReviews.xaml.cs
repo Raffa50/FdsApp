@@ -17,9 +17,7 @@ namespace FdsApp{
 		}
 
 	    private void CreateReviewClicked( object sender, EventArgs e ) {
-	        if( ApiHelper.currentUser == null ) {
-	            Navigation.PushAsync( new LoginPage() );
-	        }
+	        
 	    }
 	}
 }
