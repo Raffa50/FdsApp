@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Fds.Models;
+using Fds.Models.Mobile;
 using Newtonsoft.Json;
 
 namespace FdsApp{
@@ -32,7 +33,7 @@ namespace FdsApp{
 
         public static async Task<bool> Login( string email, string password ) {
             var json = JsonConvert.SerializeObject( new UserLogin(){Email = email, Password = password} );
-            var response = _client.PostAsync(apiUrl + "Login", new StringContent(json, Encoding.UTF8, "application/json")).Result;
+            var response = _client.PostAsync(apiUrl + "/Login", new StringContent(json, Encoding.UTF8, "application/json")).Result;
 
             if( !response.IsSuccessStatusCode )
                 return false;

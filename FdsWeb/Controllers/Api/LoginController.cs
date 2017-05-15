@@ -22,11 +22,10 @@ namespace FdsWeb.Controllers.Api{
         }
 
         // GET: api/Login
-        /*[HttpGet]
-        public IEnumerable<ApplicationUser> GetApplicationUser()
-        {
-            return _context.ApplicationUser;
-        }*/
+        [HttpGet]
+        public IActionResult GetApplicationUser() {
+            return BadRequest();
+        }
 
         // POST: api/Login
         [HttpPost]

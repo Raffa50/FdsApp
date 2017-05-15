@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Fds.Models.Mobile;
+using Newtonsoft.Json;
 
 namespace Fds.Models {
     public class Event {
@@ -13,6 +15,7 @@ namespace Fds.Models {
 
         [Required]
         public virtual string ApplicationUserId { get; set; }
+        [JsonConverter(typeof(UserConverter))]
         public virtual IUser ApplicationUser { get; set; }
 
         public virtual double Latitude { get; set; }
