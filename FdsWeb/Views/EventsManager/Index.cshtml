@@ -2,25 +2,25 @@
 @model IEnumerable<Event>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Gestione eventi";
 }
 
-<h2>Index</h2>
+<h2>Gestione eventi</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crea nuovo evento</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Descrizione
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EventType)
+                Tipo
             </th>
             <th></th>
         </tr>
@@ -38,9 +38,9 @@
                 @Html.DisplayFor(modelItem => item.EventType.Type)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Modifica</a> |
+                <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">Dettagli</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Elimina</a>
             </td>
         </tr>
 }

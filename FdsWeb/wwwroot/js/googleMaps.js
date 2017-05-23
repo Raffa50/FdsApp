@@ -7,9 +7,9 @@ function initMap(createEvent, cb) {
     );
 }
 
-function createGMaps(position, createEvent= false, cb) {
+function createGMaps(location, createEvent= false, cb) {
     var mapProp = {
-        center : position,
+        center : location,
         zoom : 11,
         streetViewControl : false,
         mapTypeId : google.maps.MapTypeId.ROADMAP
@@ -76,6 +76,16 @@ function addEventMaker(location, label) {
     });
 }
 
+function locationGetName(location, setter) {
+    geocoder.geocode({
+        latLng: location
+    },
+    responses => {
+        if (responses && responses.length > 0)
+            setter(responses[0].formatted_address);
+    });
+}
+
 function checkValidAddress() {
     // Geocode the address
     geocoder.geocode({ 'address' : $("#pac-input").val() },
@@ -89,14 +99,8 @@ function checkValidAddress() {
         });
 }
 
-function geocodePosition(pos) {
-    geocoder.geocode({
-            latLng : pos
-        },
-        function(responses) {
-            if( responses && responses.length > 0 )
-                $("#pac-input").val(responses[ 0 ].formatted_address);
-        });
+function geocodePosition(location) {
+    locationGetName(location, addr => $("#pac-input").val(addr));
 }
 
 function zoomOnEvent(e) {

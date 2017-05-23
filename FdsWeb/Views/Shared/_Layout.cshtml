@@ -7,6 +7,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    @RenderSection("Meta", required: false);
+
     <title>@ViewData[ "Title" ] - FdsWeb</title>
 
     <environment names="Development" >
@@ -53,7 +55,7 @@
                 
                 @if( SignInManager.IsSignedIn( User ) && UserManager.GetUserAsync( User ).Result.Role > 0 ) {
                     <li>
-                        <a asp-action="Index" asp-area="" asp-controller="EventsManager">Manage events</a>
+                        <a asp-action="Index" asp-area="" asp-controller="EventsManager">Gestione</a>
                     </li>
                 }
 

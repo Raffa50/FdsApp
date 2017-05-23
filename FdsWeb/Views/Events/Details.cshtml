@@ -5,7 +5,7 @@
 @model Fds.Models.Event
 
 @{
-    ViewData[ "Title" ] = "Details";
+    ViewData[ "Title" ] = "Festival della scienza- "+Model.Name;
     var user = (ApplicationUser) ViewData[ "user" ];
 }
 
@@ -13,9 +13,11 @@
 
 <div class="row" >
     <h4>
-        @Html.DisplayFor( model => model.Name ) <a asp-action="Edit" asp-route-id="@Model.Id" >Edit</a>
-    </h4>
+        @Html.DisplayFor(model => model.Name)
+    </h4> 
+    [<a asp-controller="EventsManager" asp-action="Edit" asp-route-id="@Model.Id">Modifica</a>] [<a asp-controller="EventsManager" asp-action="Delete" asp-route-id="@Model.Id">Elimina</a>]
     <hr />
+
     <div class="col-md-6" >
         <dl class="dl-horizontal" >
             <dt>
@@ -48,8 +50,12 @@
             <dd>
                 @Html.DisplayFor( model => model.ApplicationUser.UserName )
             </dd>
+            
+            <dt>Indirizzo:</dt>
+            <dd id="streetAddr"></dd>
+
             <dt>
-                Date
+                Orari
             </dt>
             <dd>
                 @foreach( var s in Model.Schedule ) {
@@ -97,18 +103,25 @@
     }
 </div>
 
+@section Meta {
+    <meta property="og:title" content="@ViewData[ "Title" ]" />
+}
+
 @section HeadJs {
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD9l6ra1D-zYRPWx888u246zLloWbWuYps&libraries=places" ></script>
     <script src="/js/googleMaps.js" ></script>
-}
+    <script>
+        $(document).ready(() => {
+            var location = { lat : @Model.Latitude.ToString( CultureInfo.InvariantCulture ),
+                lng : @Model.Longitude.ToString( CultureInfo.InvariantCulture ) };
 
-<script>
-    $(document).ready(() => {
-        initMap(false,
-            () => {
-                placeMarker({ lat : @Model.Latitude.ToString( CultureInfo.InvariantCulture ),
-                    lng : @Model.Longitude.ToString( CultureInfo.InvariantCulture ) });
-                map.setZoom(13);
-            });
-    });
-</script>
+            initMap(false,
+                () => {
+                    placeMarker(location);
+                    map.setZoom(13);
+                });
+
+            locationGetName(location, addr => $("#streetAddr").text(addr));
+        });
+    </script>
+}
