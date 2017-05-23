@@ -9,7 +9,7 @@
             <Entry x:Name="EmailText" HorizontalOptions="FillAndExpand" /></StackLayout>
         <StackLayout Orientation="Horizontal">
             <Label Text="Password: " />
-            <Entry x:Name="PasswordText" HorizontalOptions="FillAndExpand"/></StackLayout>
+            <Entry x:Name="PasswordText" IsPassword="True" HorizontalOptions="FillAndExpand"/></StackLayout>
         <Button Text="Login" Clicked="LoginClicked"/>
     </StackLayout>
     
