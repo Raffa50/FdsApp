@@ -47,6 +47,9 @@ namespace FdsWeb.Controllers.Api {
                         qr = qr.Where(o => o.Schedule.Any(
                             s => s.DateTime >= search.DateBegins && s.DateTime <= search.DateFinish));
                 }
+
+                if( search.Age != null )
+                    qr = qr.Where( o => o.AgeMin >= search.Age && ( o.AgeMax == null || search.Age <= o.AgeMax ) );
             }
             return qr;
         }

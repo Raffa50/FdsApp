@@ -20,6 +20,10 @@
             <StackLayout Orientation="Horizontal"><Label Text="Titolo: " /><Label Text="{Binding Name}" /></StackLayout>
             <StackLayout Orientation="Horizontal"><Label Text="Tipo: " /><Label Text="{Binding Path=EventType.Type}" /></StackLayout>
             <StackLayout Orientation="Horizontal">
+                <Label Text="Età: " />
+                <Label x:Name="LblAge" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Organizzatore: " />
                 <Label Text="{Binding Path=ApplicationUser.UserName}" />
             </StackLayout>

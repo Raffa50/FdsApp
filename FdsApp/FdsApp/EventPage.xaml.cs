@@ -14,6 +14,7 @@ namespace FdsApp{
 			InitializeComponent ();
 
 		    EventDetail.BindingContext = @event;
+            LblAge.Text= @event.AgeMin + ( @event.AgeMax == null ? "+" : "-"+@event.AgeMax );
 		}
 
 	    private void EventReviewClicked( object sender, EventArgs e ) {

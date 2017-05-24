@@ -13,6 +13,8 @@ namespace FdsWeb.ViewModels {
 
         public int? EventTypeId { get; set; }
 
+        public byte? Age { get; set; }
+
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public double? Radius { get; set; }
