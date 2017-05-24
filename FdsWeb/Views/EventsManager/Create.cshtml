@@ -41,6 +41,22 @@
                 </select>
             </div>
         </div>
+        
+        <div class="form-group">
+            <label class="col-md-2 control-label">Et&agrave; minima *</label>
+            <div class="col-md-10">
+                <input asp-for="AgeMin" value="0" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-md-2 control-label">Et&agrave; massima</label>
+            <div class="col-md-10">
+                <input asp-for="AgeMax" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
 
         <input asp-for="Latitude" class="form-control" id="latitudeInput" style="display: none;" type="text" />
         <input asp-for="Longitude" class="form-control" id="longitudeInput" style="display: none;" type="text" />

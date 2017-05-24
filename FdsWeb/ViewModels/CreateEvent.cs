@@ -24,6 +24,11 @@ namespace FdsWeb.ViewModels {
         [Required]
         public string Longitude { get; set; }
 
+        [Range(0, 99)]
+        public virtual byte AgeMin { get; set; }
+        [Range(1, 99)]
+        public virtual byte? AgeMax { get; set; }
+
         [EnsureMinimumElements( 1, ErrorMessage = "Almeno una data richiesta!" )]
         public ICollection< string > Schedule { get; set; }
 

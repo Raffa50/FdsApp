@@ -67,6 +67,8 @@ namespace FdsWeb.Controllers
                     ApplicationUser = GetUser(),
                     Name = model.Name,
                     Description = model.Description,
+                    AgeMin = model.AgeMin,
+                    AgeMax = model.AgeMax,
                     EventTypeId = model.EventTypeId,
                     Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
                     Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture)

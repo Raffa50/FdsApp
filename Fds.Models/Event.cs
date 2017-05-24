@@ -13,6 +13,11 @@ namespace Fds.Models {
         [Required]
         public virtual string Description { get; set; }
 
+        [Range(0,99)]
+        public virtual byte AgeMin { get; set; }
+        [Range(1, 99)]
+        public virtual byte? AgeMax { get; set; }
+
         [Required]
         public virtual string ApplicationUserId { get; set; }
         [JsonConverter(typeof(UserConverter))]

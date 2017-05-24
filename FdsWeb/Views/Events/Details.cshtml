@@ -38,6 +38,10 @@
             <dd>
                 @Html.DisplayFor( model => model.EventType.Type )
             </dd>
+            
+            <dt>Et&agrave; consigliata</dt>
+            <dd>@Model.AgeMin@(Model.AgeMax == null ? "+" : "-"+Model.AgeMax) </dd>
+
             <dt>
                 Descrizione
             </dt>
